@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Shellia AI - Connexion Sécurisée</title>
+    
+    <!-- Sécurité : Empêcher le cache -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- CSP (Content Security Policy) -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+        style-src 'self' 'unsafe-inline';
+        connect-src 'self' https://*.supabase.co https://discord.com https://api.github.com;
+        img-src 'self' https://cdn.discordapp.com data:;
+        font-src 'self';
+    ">
+    
+    <link rel="stylesheet" href="login-styles.css">
+</head>
+<body>
+    <!-- Fond animé -->
+    <div class="bg-animation">
+        <div class="bg-gradient"></div>
+        <div class="bg-grid"></div>
+        <div class="bg-particles" id="particles"></div>
+        <div class="bg-glow"></div>
+    </div>
+
+    <!-- Conteneur principal -->
+    <div class="login-container">
+        <!-- Logo et branding -->
+        <div class="brand-section">
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <div class="logo-text">
+                    <h1>Shellia AI</h1>
+                    <span>Admin Dashboard</span>
+                </div>
+            </div>
+            <div class="security-badge">
+                <span class="shield">🛡️</span>
+                <span class="text">Connexion Sécurisée</span>
+            </div>
+        </div>
+
+        <!-- Carte de connexion -->
+        <div class="login-card">
+            <div class="card-header">
+                <h2>Authentification Requise</h2>
+                <p class="subtitle">Accès réservé aux administrateurs</p>
+            </div>
+
+            <!-- Étape 1: Choix de la méthode -->
+            <div class="auth-methods" id="auth-methods">
+                <button class="auth-btn discord" onclick="startDiscordAuth()">
+                    <div class="btn-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+                        </svg>
+                    </div>
+                    <div class="btn-text">
+                        <span class="primary">Continuer avec Discord</span>
+                        <span class="secondary">Recommandé • Sécurisé</span>
+                    </div>
+                    <div class="btn-arrow">→</div>
+                </button>
+
+                <div class="divider">
+                    <span>ou</span>
+                </div>
+
+                <button class="auth-btn emergency" onclick="showEmergencyAccess()">
+                    <div class="btn-icon">🔐</div>
+                    <div class="btn-text">
+                        <span class="primary">Accès d'urgence</span>
+                        <span class="secondary">Clé de secours uniquement</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Étape 2: Emergency Access (caché par défaut) -->
+            <div class="emergency-access" id="emergency-access" style="display: none;">
+                <div class="warning-box">
+                    <span class="icon">⚠️</span>
+                    <p>Cet accès est réservé aux situations d'urgence et est fortement logué.</p>
+                </div>
+                
+                <div class="input-group">
+                    <label>Clé d'accès d'urgence</label>
+                    <input type="password" id="emergency-key" placeholder="••••••••••••••••••••••">
+                    <span class="input-hint">Contactez le super admin pour obtenir cette clé</span>
+                </div>
+
+                <div class="input-group">
+                    <label>Code 2FA (si activé)</label>
+                    <input type="text" id="emergency-2fa" placeholder="000000" maxlength="6">
+                </div>
+
+                <button class="submit-btn" onclick="verifyEmergencyAccess()">
+                    Vérifier l'accès
+                </button>
+
+                <button class="back-btn" onclick="hideEmergencyAccess()">
+                    ← Retour
+                </button>
+            </div>
+
+            <!-- Loading state -->
+            <div class="loading-state" id="loading-state" style="display: none;">
+                <div class="spinner"></div>
+                <p>Connexion en cours...</p>
+                <span class="sub">Vérification des identifiants Discord</span>
+            </div>
+
+            <!-- Error state -->
+            <div class="error-state" id="error-state" style="display: none;">
+                <span class="icon">❌</span>
+                <p id="error-message">Accès refusé</p>
+                <button onclick="resetAuth()">Réessayer</button>
+            </div>
+        </div>
+
+        <!-- Footer info -->
+        <div class="login-footer">
+            <div class="security-info">
+                <div class="info-item">
+                    <span class="icon">🔒</span>
+                    <span>Connexion chiffrée SSL</span>
+                </div>
+                <div class="info-item">
+                    <span class="icon">🛡️</span>
+                    <span>Authentification OAuth2</span>
+                </div>
+                <div class="info-item">
+                    <span class="icon">📍</span>
+                    <span id="ip-display">IP: --.--.--.--</span>
+                </div>
+            </div>
+            
+            <div class="version">
+                <span>v2.0-Security</span>
+                <span class="dot">•</span>
+                <span id="timestamp"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Canvas pour effet particules -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Scripts -->
+    <!-- Scripts avec SRI (Subresource Integrity) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+        integrity="sha384-4Mcqb1M9U0z3I0sX0P0w5w0t0u0r0a0l0k0e0y0w0a0y0"
+        crossorigin="anonymous"
+        onerror="console.error('🚨 Échec chargement Supabase - possible attaque')"></script>
+    
+    <!-- Protections avancées -->
+    <script src="security-advanced.js"></script>
+    
+    <!-- Scripts applicatifs -->
+    <script src="login-auth.js"></script>
+    <script src="login-effects.js"></script>
+</body>
+</html>

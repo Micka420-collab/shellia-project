@@ -1,0 +1,89 @@
+# Docker Compose - Shellia AI Bot avec Sécurité
+# Inclut Redis pour le rate limiting persistant
+
+version: '3.8'
+
+services:
+  # Redis pour le rate limiting et cache
+  redis:
+    image: redis:7-alpine
+    container_name: shellia-redis
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - shellia-network
+
+  # Bot Shellia AI
+  bot:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    container_name: shellia-bot
+    restart: unless-stopped
+    environment:
+      # Clé maître pour déchiffrement
+      - SECURE_CONFIG_KEY=${SECURE_CONFIG_KEY}
+      # Connexion Redis
+      - REDIS_URL=redis://redis:6379/0
+      # Autres variables (chiffrées dans .env)
+      - ENVIRONMENT=production
+    env_file:
+      - ../.env
+    volumes:
+      - ../logs:/app/logs
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - shellia-network
+    # Sécurité: ne pas exécuter en root
+    user: "1000:1000"
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:noexec,nosuid,size=100m
+
+  # Nettoyage périodique (optionnel)
+  cleaner:
+    image: supabase/supabase-cli:latest
+    container_name: shellia-cleaner
+    restart: unless-stopped
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+    command: >
+      sh -c "
+        while true; do
+          sleep 86400;
+          echo 'Nettoyage quotidien...';
+          # Cleanup rate limits expirés
+          psql $$SUPABASE_URL -c 'SELECT cleanup_expired_rate_limits();';
+          # Archiver vieilles conversations
+          psql $$SUPABASE_URL -c 'SELECT archive_old_conversations(30);';
+          # Supprimer vieux logs
+          psql $$SUPABASE_URL -c \"DELETE FROM security_logs WHERE timestamp < NOW() - INTERVAL '90 days';\";
+        done
+      "
+    networks:
+      - shellia-network
+
+volumes:
+  redis_data:
+    driver: local
+
+networks:
+  shellia-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

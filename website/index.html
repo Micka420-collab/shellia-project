@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shellia AI - L'Intelligence Artificielle des E-commerçants</title>
+    <meta name="description" content="Shellia AI - L'assistant IA qui révolutionne l'e-commerce. Automatisation, copywriting, support client et analyse de marché. Propulsé par NEXTENDO.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            /* Blue-Violet Elegant Theme */
+            --primary-blue: #3b82f6;
+            --primary-violet: #7c3aed;
+            --deep-blue: #1e1b4b;
+            --royal-violet: #5b21b6;
+            --accent-cyan: #06b6d4;
+            --dark-bg: #0f172a;
+            --darker-bg: #020617;
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --card-border: rgba(99, 102, 241, 0.15);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #7c3aed 50%, #2563eb 100%);
+            --gradient-glow: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(124, 58, 237, 0.3));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Gradient Background */
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
+                var(--darker-bg);
+        }
+
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            animation: float 25s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 700px;
+            height: 700px;
+            background: linear-gradient(135deg, var(--primary-violet), var(--deep-blue));
+            top: -300px;
+            right: -200px;
+            opacity: 0.25;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--royal-violet));
+            bottom: -200px;
+            left: -200px;
+            opacity: 0.2;
+            animation-delay: -8s;
+        }
+
+        .orb-3 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--primary-blue));
+            top: 40%;
+            right: 10%;
+            opacity: 0.12;
+            animation-delay: -16s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -40px) scale(1.08); }
+            66% { transform: translate(-30px, 30px) scale(0.95); }
+        }
+
+        /* Noise Texture */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.25rem 2rem;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.875rem 2rem;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: var(--gradient-primary);
+            border-radius: 16px;
+            z-index: -1;
+            animation: borderRotate 6s linear infinite;
+            filter: blur(8px);
+            opacity: 0.7;
+        }
+
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.875rem 1.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glass {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-glass:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-cyan {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--primary-blue));
+            color: white;
+            box-shadow: 0 4px 30px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-cyan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(6, 182, 212, 0.4);
+        }
+
+        .btn-large {
+            padding: 1rem 2.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10rem 2rem 6rem;
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--primary-blue);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-badge .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 5vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .stat {
+            position: relative;
+        }
+
+        .stat::after {
+            content: '';
+            position: absolute;
+            right: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 40px;
+            background: var(--card-border);
+        }
+
+        .stat:last-child::after {
+            display: none;
+        }
+
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
+        }
+
+        .chat-preview {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 1rem;
+        }
+
+        .chat-avatar {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .chat-name {
+            font-weight: 600;
+        }
+
+        .chat-status {
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .chat-message:nth-child(2) { animation-delay: 0.5s; }
+        .chat-message:nth-child(3) { animation-delay: 1s; }
+        .chat-message:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-bubble {
+            background: rgba(30, 41, 59, 0.8);
+            padding: 0.875rem 1.25rem;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            font-size: 0.9rem;
+            border: 1px solid var(--card-border);
+        }
+
+        .message-bubble.user {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(124, 58, 237, 0.15));
+            border-color: rgba(99, 102, 241, 0.3);
+            border-top-left-radius: 16px;
+            border-top-right-radius: 4px;
+            margin-left: auto;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 1rem;
+        }
+
+        .chat-input-field {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.875rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        /* Floating Elements */
+        .float-card {
+            position: absolute;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            backdrop-filter: blur(20px);
+            animation: floatCard 6s ease-in-out infinite;
+        }
+
+        .float-card-1 {
+            top: -30px;
+            right: -40px;
+            animation-delay: 0s;
+        }
+
+        .float-card-2 {
+            bottom: 20px;
+            left: -50px;
+            animation-delay: -3s;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 2rem;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 5rem;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .section-title .gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent);
+        }
+
+        .feature-card:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 50px rgba(59, 130, 246, 0.1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-blue);
+            transition: all 0.4s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .feature-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 8rem 2rem;
+            background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
+        }
+
+        .steps-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+        }
+
+        .step:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateX(10px);
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .step-content h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+        }
+
+        /* Pricing Preview */
+        .pricing-preview {
+            padding: 8rem 2rem;
+        }
+
+        .pricing-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card.featured {
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 60px rgba(59, 130, 246, 0.1);
+            transform: scale(1.05);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 0 0 12px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pricing-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary-blue);
+        }
+
+        .pricing-card.featured .pricing-icon {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .pricing-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price span {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            -webkit-text-fill-color: var(--text-secondary);
+        }
+
+        .pricing-note {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+            flex: 1;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li i {
+            color: var(--accent-cyan);
+            width: 18px;
+            height: 18px;
+        }
+
+        .pricing-features li.not-included i {
+            color: var(--text-muted);
+            opacity: 0.3;
+        }
+
+        .pricing-cta {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 8rem 2rem;
+        }
+
+        .cta-box {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 32px;
+            padding: 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-box h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-box p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid var(--card-border);
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 1rem;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-powered {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .footer-powered span {
+            color: var(--text-secondary);
+        }
+
+        .footer-powered strong {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.875rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            width: 44px;
+            height: 44px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-description {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+                order: -1;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .cta-box h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gradient-text-animated {
+            background: linear-gradient(90deg, #3b82f6, #7c3aed, #06b6d4, #3b82f6);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 6s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="noise"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <i data-lucide="sparkles" style="width: 22px; height: 22px; color: white;"></i>
+                </div>
+                Shellia
+            </a>
+            <ul class="nav-links">
+                <li><a href="features.html">Fonctionnalités</a></li>
+                <li><a href="pricing.html">Tarifs</a></li>
+                <li><a href="community.html">Communauté</a></li>
+                <li><a href="about.html">À propos</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="https://discord.gg/shellia" class="btn btn-glass" target="_blank">Discord</a>
+                <a href="pricing.html" class="btn btn-primary">Commencer</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content fade-in">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    Propulsé par <span class="highlight">NEXTENDO</span>
+                </div>
+                <h1>
+                    L'IA qui<br>
+                    <span class="gradient-text-animated">révolutionne</span><br>
+                    l'e-commerce
+                </h1>
+                <p class="hero-description">
+                    Shellia est l'assistant IA ultime pour les e-commerçants. Copywriting, 
+                    support client, analyse de marché et automatisation - tout en un.
+                </p>
+                <div class="hero-cta">
+                    <a href="pricing.html" class="btn btn-primary btn-large">
+                        Essayer gratuitement
+                        <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+                    </a>
+                    <a href="features.html" class="btn btn-glass btn-large">
+                        <i data-lucide="play" style="width: 18px; height: 18px;"></i>
+                        Voir la démo
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value">5K+</div>
+                        <div class="stat-label">Utilisateurs</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">€2M+</div>
+                        <div class="stat-label">CA généré</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual fade-in">
+                <div class="glass-card chat-preview">
+                    <div class="chat-header">
+                        <div class="chat-avatar">
+                            <i data-lucide="bot" style="width: 24px; height: 24px; color: white;"></i>
+                        </div>
+                        <div>
+                            <div class="chat-name">Shellia AI</div>
+                            <div class="chat-status">
+                                <span style="width: 8px; height: 8px; background: var(--accent-cyan); border-radius: 50%; box-shadow: 0 0 10px var(--accent-cyan);"></span>
+                                En ligne
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-message">
+                        <div class="message-bubble">
+                            Analyse mes concurrents pour cette semaine
+                        </div>
+                    </div>
+                    <div class="chat-message">
+                        <div class="message-bubble" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(124, 58, 237, 0.15)); border-color: rgba(99, 102, 241, 0.3);">
+                            <strong style="color: var(--primary-blue);">Analyse terminée !</strong><br>
+                            3 opportunités identifiées. Tes concurrents ont augmenté leurs prix de 15% - c'est le moment d'attaquer le marché ! 🚀
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" class="chat-input-field" placeholder="Écris ton message..." readonly>
+                        <button class="btn btn-primary" style="padding: 0.75rem;">
+                            <i data-lucide="send" style="width: 18px; height: 18px;"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="float-card float-card-1">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="trending-up" style="width: 20px; height: 20px; color: white;"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">Conversion</div>
+                            <div style="font-weight: 600; color: var(--primary-blue);">+34%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="float-card float-card-2">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <i data-lucide="message-square" style="width: 20px; height: 20px; color: white;"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">Messages</div>
+                            <div style="font-weight: 600; color: var(--primary-blue);">1,247</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header fade-in">
+            <div class="section-tag">
+                <i data-lucide="zap" style="width: 16px; height: 16px;"></i>
+                Fonctionnalités
+            </div>
+            <h2 class="section-title">
+                Tout ce dont tu as besoin<br>
+                pour <span class="gradient">scale</span>
+            </h2>
+            <p class="section-desc">
+                Des outils puissants conçus par des e-commerçants pour des e-commerçants. 
+                Chaque fonctionnalité est pensée pour maximiser tes résultats.
+            </p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i data-lucide="pen-tool" style="width: 28px; height: 28px;"></i>
+                </div>
+                <h3 class="feature-title">Copywriting IA</h3>
+                <p class="feature-desc">
+                    Génère des fiches produit, emails et ads qui convertissent. 
+                    A/B test intégré pour optimiser chaque mot.
+                </p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i data-lucide="bar-chart-3" style="width: 28px; height: 28px;"></i>
+                </div>
+                <h3 class="feature-title">Analyse de Marché</h3>
+                <p class="feature-desc">
+                    Identifie les produits gagnants et analyse la concurrence 
+                    en temps réel avec nos algorithmes prédictifs.
+                </p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i data-lucide="headphones" style="width: 28px; height: 28px;"></i>
+                </div>
+                <h3 class="feature-title">Support 24/7</h3>
+                <p class="feature-desc">
+                    Shellia répond à tes clients instantanément. Réduction de 80% 
+                    du temps de réponse, satisfaction client maximale.
+                </p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i data-lucide="image" style="width: 28px; height: 28px;"></i>
+                </div>
+                <h3 class="feature-title">Génération d'Images</h3>
+                <p class="feature-desc">
+                    Crée des visuels professionnels pour tes produits et ads 
+                    sans compétences design. Templates optimisés inclus.
+                </p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i data-lucide="target" style="width: 28px; height: 28px;"></i>
+                </div>
+                <h3 class="feature-title">Analytics Intelligents</h3>
+                <p class="feature-desc">
+                    Dashboard personnalisé, KPIs en temps réel et recommandations 
+                    actionnables pour optimiser ton funnel.
+                </p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i data-lucide="users" style="width: 28px; height: 28px;"></i>
+                </div>
+                <h3 class="feature-title">Communauté Privée</h3>
+                <p class="feature-desc">
+                    Rejoins 5000+ e-commerçants. Networking, partage et 
+                    opportunités business exclusives.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="section-header fade-in">
+            <div class="section-tag">
+                <i data-lucide="cpu" style="width: 16px; height: 16px;"></i>
+                Comment ça marche
+            </div>
+            <h2 class="section-title">
+                Trois étapes pour<br>
+                <span class="gradient">transformer</span> ton business
+            </h2>
+        </div>
+        <div class="steps-container">
+            <div class="step fade-in">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Connecte tes boutiques</h3>
+                    <p>Intègre Shellia à Shopify, WooCommerce, PrestaShop ou ton API en quelques clics. Configuration en moins de 5 minutes.</p>
+                </div>
+            </div>
+            <div class="step fade-in">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Configure ton assistant</h3>
+                    <p>Personnalise le ton de voix, les réponses types et les workflows. Shellia s'adapte à ta marque et tes process.</p>
+                </div>
+            </div>
+            <div class="step fade-in">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Scale automatiquement</h3>
+                    <p>Laisse Shellia gérer le quotidien pendant que tu te concentres sur la stratégie. Résultats visibles dès la première semaine.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Preview -->
+    <section class="pricing-preview">
+        <div class="section-header fade-in">
+            <div class="section-tag">
+                <i data-lucide="tag" style="width: 16px; height: 16px;"></i>
+                Tarifs
+            </div>
+            <h2 class="section-title">
+                Des prix qui évoluent<br>
+                avec <span class="gradient">ton business</span>
+            </h2>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card fade-in">
+                <div class="pricing-name">Free</div>
+                <div class="pricing-price">
+                    €0<span>/mois</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i data-lucide="check"></i> 10 messages/jour</li>
+                    <li><i data-lucide="check"></i> Smart Routing</li>
+                    <li><i data-lucide="check"></i> Historique 1 jour</li>
+                    <li class="not-included"><i data-lucide="x"></i> Génération d'images</li>
+                </ul>
+                <a href="https://discord.gg/shellia" class="btn btn-glass" style="width: 100%;" target="_blank">
+                    Commencer
+                </a>
+            </div>
+            <div class="pricing-card fade-in">
+                <div class="pricing-name">Basic</div>
+                <div class="pricing-price">
+                    €4.99<span>/mois</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i data-lucide="check"></i> 50 messages/jour</li>
+                    <li><i data-lucide="check"></i> Upload fichiers 5MB</li>
+                    <li><i data-lucide="check"></i> Historique 7 jours</li>
+                    <li class="not-included"><i data-lucide="x"></i> Channel privé</li>
+                </ul>
+                <a href="pricing.html" class="btn btn-glass" style="width: 100%;">
+                    Choisir Basic
+                </a>
+            </div>
+            <div class="pricing-card featured fade-in">
+                <div class="pricing-badge">Populaire</div>
+                <div class="pricing-name">Pro</div>
+                <div class="pricing-price">
+                    €9.99<span>/mois</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i data-lucide="check"></i> 150 messages/jour</li>
+                    <li><i data-lucide="check"></i> Channel privé</li>
+                    <li><i data-lucide="check"></i> Historique illimité</li>
+                    <li><i data-lucide="check"></i> 10 images/jour</li>
+                </ul>
+                <a href="pricing.html" class="btn btn-primary" style="width: 100%;">
+                    Choisir Pro
+                </a>
+            </div>
+            <div class="pricing-card fade-in">
+                <div class="pricing-name">Ultra</div>
+                <div class="pricing-price">
+                    €29.99<span>/mois</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i data-lucide="check"></i> 400 messages/jour</li>
+                    <li><i data-lucide="check"></i> Channel privé</li>
+                    <li><i data-lucide="check"></i> Historique illimité</li>
+                    <li><i data-lucide="check"></i> 50 images/jour</li>
+                    <li><i data-lucide="check"></i> Support VIP 4h</li>
+                </ul>
+                <a href="pricing.html" class="btn btn-cyan" style="width: 100%;">
+                    Choisir Ultra
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-box fade-in">
+            <div class="cta-content">
+                <h2>Prêt à automatiser ?</h2>
+                <p>
+                    Rejoins plus de 5 000 e-commerçants qui utilisent Shellia 
+                    pour développer leur business. Essai gratuit de 14 jours.
+                </p>
+                <div class="hero-cta" style="justify-content: center;">
+                    <a href="pricing.html" class="btn btn-primary btn-large">
+                        Essayer gratuitement
+                        <i data-lucide="arrow-right" style="width: 20px; height: 20px;"></i>
+                    </a>
+                    <a href="https://discord.gg/shellia" class="btn btn-cyan btn-large" target="_blank">
+                        <i data-lucide="message-circle" style="width: 20px; height: 20px;"></i>
+                        Rejoindre Discord
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">
+                            <i data-lucide="sparkles" style="width: 22px; height: 22px; color: white;"></i>
+                        </div>
+                        Shellia
+                    </a>
+                    <p class="footer-desc">
+                        L'assistant IA qui révolutionne l'e-commerce. Développé par des e-commerçants, 
+                        pour des e-commerçants.
+                    </p>
+                    <div class="footer-powered">
+                        <span>Propulsé par</span>
+                        <strong>NEXTENDO</strong>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-title">Produit</h4>
+                    <ul class="footer-links">
+                        <li><a href="features.html">Fonctionnalités</a></li>
+                        <li><a href="pricing.html">Tarifs</a></li>
+                        <li><a href="integrations.html">Intégrations</a></li>
+                        <li><a href="roadmap.html">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Ressources</h4>
+                    <ul class="footer-links">
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="guides.html">Guides</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="api.html">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Entreprise</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">À propos</a></li>
+                        <li><a href="community.html">Communauté</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="careers.html">Recrutement</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Shellia by NEXTENDO. Tous droits réservés.</p>
+                <div class="footer-social">
+                    <a href="#"><i data-lucide="twitter" style="width: 20px; height: 20px;"></i></a>
+                    <a href="#"><i data-lucide="linkedin" style="width: 20px; height: 20px;"></i></a>
+                    <a href="#"><i data-lucide="github" style="width: 20px; height: 20px;"></i></a>
+                    <a href="https://discord.gg/shellia"><i data-lucide="message-circle" style="width: 20px; height: 20px;"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            fadeObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

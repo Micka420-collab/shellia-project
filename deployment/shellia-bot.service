@@ -1,0 +1,60 @@
+# ============================================
+# SHELLIA AI BOT - SYSTEMD SERVICE
+# ============================================
+# Installation:
+#   sudo cp shellia-bot.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable shellia-bot
+#   sudo systemctl start shellia-bot
+#
+# Logs:
+#   sudo journalctl -u shellia-bot -f
+# ============================================
+
+[Unit]
+Description=Shellia AI Discord Bot
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=shellia
+Group=shellia
+
+# Répertoire de travail
+WorkingDirectory=/opt/shellia/bot
+
+# Environnement
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+EnvironmentFile=/opt/shellia/bot/.env
+
+# Commande de démarrage
+ExecStart=/opt/shellia/venv/bin/python bot.py
+
+# Redémarrage automatique
+Restart=always
+RestartSec=10
+
+# Limite de redémarrages
+StartLimitInterval=60s
+StartLimitBurst=3
+
+# Timeouts
+TimeoutStartSec=30
+TimeoutStopSec=30
+
+# Sécurité
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/shellia/bot/logs
+PrivateTmp=true
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=shellia-bot
+
+[Install]
+WantedBy=multi-user.target

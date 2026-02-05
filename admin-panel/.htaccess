@@ -1,0 +1,227 @@
+# ============================================================================
+# CONFIGURATION SÉCURITÉ AVANCÉE APACHE - Shellia AI Dashboard
+# Protection contre attaques complexes (APT)
+# ============================================================================
+
+# ============================================================================
+# 1. REDIRECTIONS ET ROUTAGE
+# ============================================================================
+
+# Forcer HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Rediriger racine vers login.html
+RewriteCond %{REQUEST_URI} ^/admin-panel/?$
+RewriteRule ^ /admin-panel/login.html [L,R=302]
+
+# Protéger contre le directory traversal
+RewriteCond %{REQUEST_URI} "\.\." [NC]
+RewriteRule .* - [F,L]
+
+# ============================================================================
+# 2. HEADERS DE SÉCURITÉ CRITIQUES
+# ============================================================================
+
+<IfModule mod_headers.c>
+    # Protection Clickjacking
+    Header always set X-Frame-Options "DENY"
+    
+    # Protection MIME sniffing
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Protection XSS
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Referrer Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Permissions Policy (nouveau Feature-Policy)
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+    
+    # Cross-Domain Policies
+    Header always set X-Permitted-Cross-Domain-Policies "none"
+    
+    # DNS Prefetch Control
+    Header always set X-DNS-Prefetch-Control "off"
+    
+    # HSTS (HTTP Strict Transport Security) - DÉCOMMENTER EN PRODUCTION
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    
+    # CSP Report-Only (tester avant d'appliquer strictement)
+    # Header always set Content-Security-Policy-Report-Only "default-src 'none'; script-src 'self' 'nonce-abc123' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co https://discord.com; img-src 'self' data: https://cdn.discordapp.com; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests; report-uri /api/csp-report;"
+    
+    # Remove headers that expose server info
+    Header always unset X-Powered-By
+    Header always unset Server
+    Header always unset X-AspNet-Version
+    Header always unset X-AspNetMvc-Version
+</IfModule>
+
+# ============================================================================
+# 3. CACHE CONTROL SÉCURISÉ
+# ============================================================================
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Par défaut: cache court
+    ExpiresDefault "access plus 1 hour"
+    
+    # Assets statiques: cache long
+    <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+        ExpiresDefault "access plus 1 month"
+        Header set Cache-Control "public, immutable"
+    </FilesMatch>
+    
+    # HTML et auth: PAS DE CACHE
+    <FilesMatch "\.(html|htm|json|js)$">
+        ExpiresDefault "access plus 0 seconds"
+        Header set Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, private"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+    
+    # Fichiers sensibles: PAS DE CACHE
+    <FilesMatch "^(login|auth|security)\.">
+        ExpiresDefault "access plus 0 seconds"
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0, no-store, private"
+    </FilesMatch>
+</IfModule>
+
+# ============================================================================
+# 4. PROTECTION FICHIERS SENSIBLES
+# ============================================================================
+
+# Fichiers cachés (commençant par .)
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</FilesMatch>
+
+# Extensions dangereuses
+<FilesMatch "\.(env|config|ini|log|sh|bash|zsh|sql|md|git|svn|hg|lock|dist)$">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</FilesMatch>
+
+# Fichiers de configuration
+<FilesMatch "(composer\.|package\.lock|yarn\.lock| Gemfile|gulpfile|gruntfile|webpack)>
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Backup files
+<FilesMatch "(\~|\.bak|\.old|\.orig|\.save|\.swp|\.tmp)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ============================================================================
+# 5. RATE LIMITING (nécessite mod_evasive ou mod_security)
+# ============================================================================
+
+# Optionnel: installer mod_evasive pour protection DDoS
+# <IfModule mod_evasive.c>
+#     DOSHashTableSize 3097
+#     DOSPageCount 5
+#     DOSSiteCount 50
+#     DOSPageInterval 1
+#     DOSSiteInterval 1
+#     DOSBlockingPeriod 600
+# </IfModule>
+
+# ============================================================================
+# 6. COMPRESSION
+# ============================================================================
+
+<IfModule mod_deflate.c>
+    # Compresser les ressources statiques
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    
+    # Ne pas compresser les images (déjà compressées)
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+    SetEnvIfNoCase Request_URI \.(?:exe|t?gz|zip|bz2|sit|rar)$ no-gzip dont-vary
+</IfModule>
+
+# ============================================================================
+# 7. OPTIONS SÉCURISÉES
+# ============================================================================
+
+# Désactiver l'affichage des répertoires
+Options -Indexes
+
+# Désactiver le suivi des liens symboliques (si possible)
+Options -FollowSymLinks
+Options +SymLinksIfOwnerMatch
+
+# Empêcher l'exécution de scripts dans les dossiers uploads (si applicable)
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+
+# ============================================================================
+# 8. CORS (Cross-Origin Resource Sharing) - RESTREINT
+# ============================================================================
+
+<IfModule mod_headers.c>
+    <If "%{REQUEST_METHOD} == 'OPTIONS'">
+        Header always set Access-Control-Allow-Origin "null"
+        Header always set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+        Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+        Header always set Access-Control-Max-Age "86400"
+    </If>
+</IfModule>
+
+# ============================================================================
+# 9. PROTECTION BRUTE FORCE (simplifiée)
+# ============================================================================
+
+# Limiter les requêtes sur les endpoints d'auth
+<LocationMatch "^/(login|auth|api/login)">
+    # Nécessite mod_ratelimit
+    <IfModule mod_ratelimit.c>
+        SetOutputFilter RATE_LIMIT
+        SetEnv rate-limit 400 
+    </IfModule>
+</LocationMatch>
+
+# ============================================================================
+# 10. LOGGING SÉCURITÉ
+# ============================================================================
+
+# Logguer les erreurs 403 et 500 pour détection d'attaques
+ErrorDocument 403 /errors/403.html
+ErrorDocument 404 /errors/404.html
+ErrorDocument 500 /errors/500.html
+
+# Format de log personnalisé avec User-Agent et Referrer
+LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\" %D" security
+
+# Fichier par défaut
+DirectoryIndex login.html index.html
+
+# ============================================================================
+# 11. PROTECTION SUPPLÉMENTAIRE
+# ============================================================================
+
+# Désactiver ETag (fuite d'info sur le serveur)
+FileETag None
+
+# Charset par défaut
+AddDefaultCharset UTF-8
+
+# Limit request body size (10MB)
+LimitRequestBody 10485760

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # 🤖 MAXIS BOT - E-commerce
+  maxis:
+    build: .
+    container_name: maxis-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"  # API de contrôle
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - redis
+    networks:
+      - maxis-network
+
+  # 🔄 REDIS - Cache
+  redis:
+    image: redis:7-alpine
+    container_name: maxis-redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - maxis-network
+
+volumes:
+  redis-data:
+
+networks:
+  maxis-network:
+    driver: bridge

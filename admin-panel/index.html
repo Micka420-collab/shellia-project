@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shellia AI - Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">🤖</span>
+                <span class="logo-text">Shellia AI</span>
+            </div>
+            
+            <nav class="nav">
+                <a href="#overview" class="nav-item active" data-page="overview">
+                    <span class="nav-icon">📊</span>
+                    <span>Vue d'ensemble</span>
+                </a>
+                <a href="#users" class="nav-item" data-page="users">
+                    <span class="nav-icon">👥</span>
+                    <span>Utilisateurs</span>
+                </a>
+                <a href="#payments" class="nav-item" data-page="payments">
+                    <span class="nav-icon">💰</span>
+                    <span>Paiements</span>
+                </a>
+                <a href="#security" class="nav-item" data-page="security">
+                    <span class="nav-icon">🔒</span>
+                    <span>Sécurité</span>
+                </a>
+                <a href="#analytics" class="nav-item" data-page="analytics">
+                    <span class="nav-icon">📈</span>
+                    <span>Analytics</span>
+                </a>
+                <a href="#config" class="nav-item" data-page="config">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Configuration</span>
+                </a>
+                <a href="#tasks" class="nav-item" data-page="tasks">
+                    <span class="nav-icon">⏰</span>
+                    <span>Tâches</span>
+                    <span class="nav-badge" id="task-badge">0</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout" onclick="logout()">🚪 Déconnexion</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Header -->
+            <header class="header">
+                <h1 class="page-title">Tableau de Bord</h1>
+                <div class="header-actions">
+                    <div class="user-info" id="user-info"></div>
+                    <span class="status-badge online">● En ligne</span>
+                    <span class="version">v2.0-Security</span>
+                    <button onclick="logout()" class="btn-logout-header" title="Déconnexion">🚪</button>
+                </div>
+            </header>
+
+            <!-- Pages -->
+            <div class="content">
+                <!-- Overview Page -->
+                <div id="overview-page" class="page active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-info">
+                                <h3 id="stat-users">-</h3>
+                                <p>Utilisateurs totaux</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💬</div>
+                            <div class="stat-info">
+                                <h3 id="stat-messages">-</h3>
+                                <p>Messages aujourd'hui</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-info">
+                                <h3 id="stat-revenue">-</h3>
+                                <p>Revenus ce mois</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⚡</div>
+                            <div class="stat-info">
+                                <h3 id="stat-cost">-</h3>
+                                <p>Coût API aujourd'hui</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-row">
+                        <div class="chart-card">
+                            <h3>Messages (7 derniers jours)</h3>
+                            <canvas id="messages-chart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Distribution des plans</h3>
+                            <canvas id="plans-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="recent-activity">
+                        <h3>Activité récente</h3>
+                        <div id="activity-list" class="activity-list">
+                            <p class="loading">Chargement...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Page -->
+                <div id="users-page" class="page">
+                    <div class="page-header">
+                        <h2>Gestion des Utilisateurs</h2>
+                        <div class="search-box">
+                            <input type="text" id="user-search" placeholder="Rechercher un utilisateur...">
+                            <button onclick="searchUsers()">🔍</button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="users-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Plan</th>
+                                    <th>Messages</th>
+                                    <th>Inscription</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td colspan="6" class="loading">Chargement...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button onclick="prevPage()">← Précédent</button>
+                        <span id="page-info">Page 1</span>
+                        <button onclick="nextPage()">Suivant →</button>
+                    </div>
+                </div>
+
+                <!-- Payments Page -->
+                <div id="payments-page" class="page">
+                    <div class="page-header">
+                        <h2>Paiements & Abonnements</h2>
+                    </div>
+                    
+                    <div class="stats-row">
+                        <div class="mini-stat">
+                            <span class="mini-stat-value" id="payment-total">-</span>
+                            <span class="mini-stat-label">Total ce mois</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span class="mini-stat-value" id="payment-count">-</span>
+                            <span class="mini-stat-label">Transactions</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span class="mini-stat-value" id="payment-conversion">-</span>
+                            <span class="mini-stat-label">Conversion</span>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="payments-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Utilisateur</th>
+                                    <th>Plan</th>
+                                    <th>Montant</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td colspan="5" class="loading">Chargement...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Security Page -->
+                <div id="security-page" class="page">
+                    <div class="page-header">
+                        <h2>Centre de Sécurité</h2>
+                    </div>
+                    
+                    <div class="security-status">
+                        <div class="security-card">
+                            <h4>🔐 Chiffrement</h4>
+                            <span class="status ok">Actif</span>
+                            <p>Clés API chiffrées avec Fernet</p>
+                        </div>
+                        <div class="security-card">
+                            <h4>🛡️ Rate Limiting</h4>
+                            <span class="status ok">Actif</span>
+                            <p>Persistant avec Redis/Supabase</p>
+                        </div>
+                        <div class="security-card">
+                            <h4>⚡ Circuit Breaker</h4>
+                            <span class="status" id="circuit-status">Vérification...</span>
+                            <p>Protection contre les cascades</p>
+                        </div>
+                        <div class="security-card">
+                            <h4>✅ Webhooks Stripe</h4>
+                            <span class="status ok">Validés</span>
+                            <p>Signature HMAC-SHA256</p>
+                        </div>
+                    </div>
+                    
+                    <div class="security-alerts">
+                        <h3>🚨 Alertes Récentes</h3>
+                        <div id="security-alerts-list">
+                            <p class="loading">Chargement...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="security-logs">
+                        <h3>📋 Logs de Sécurité</h3>
+                        <div class="table-container">
+                            <table id="security-logs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Événement</th>
+                                        <th>Sévérité</th>
+                                        <th>Utilisateur</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="4" class="loading">Chargement...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Page -->
+                <div id="analytics-page" class="page">
+                    <div class="page-header">
+                        <h2>Analytics Avancées</h2>
+                    </div>
+                    
+                    <div class="charts-grid">
+                        <div class="chart-card large">
+                            <h3>Utilisateurs actifs (30 jours)</h3>
+                            <canvas id="users-chart"></canvas>
+                        </div>
+                        <div class="chart-card large">
+                            <h3>Coûts API (7 jours)</h3>
+                            <canvas id="costs-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-box">
+                            <h4>Messages / Utilisateur</h4>
+                            <span id="metric-msg-per-user">-</span>
+                        </div>
+                        <div class="metric-box">
+                            <h4>Taux de rétention</h4>
+                            <span id="metric-retention">-</span>
+                        </div>
+                        <div class="metric-box">
+                            <h4>Coût moyen / Message</h4>
+                            <span id="metric-cost-per-msg">-</span>
+                        </div>
+                        <div class="metric-box">
+                            <h4>Temps de réponse moyen</h4>
+                            <span id="metric-response-time">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Page -->
+                <div id="tasks-page" class="page">
+                    <div class="page-header">
+                        <h2>⏰ Tâches Planifiées</h2>
+                        <button onclick="showCreateTaskModal()" class="btn-primary">
+                            <span>➕ Nouvelle tâche</span>
+                        </button>
+                    </div>
+
+                    <!-- Stats des tâches -->
+                    <div class="stats-row">
+                        <div class="mini-stat">
+                            <span class="mini-stat-value" id="task-total">-</span>
+                            <span class="mini-stat-label">Tâches actives</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span class="mini-stat-value" id="task-running">-</span>
+                            <span class="mini-stat-label">En cours</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span class="mini-stat-value" id="task-success">-</span>
+                            <span class="mini-stat-label">Succès 24h</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span class="mini-stat-value" id="task-failed">-</span>
+                            <span class="mini-stat-label">Échecs 24h</span>
+                        </div>
+                    </div>
+
+                    <!-- Tâches actives -->
+                    <div class="config-section">
+                        <div class="section-header">
+                            <h3>📋 Tâches Actives</h3>
+                            <div class="section-actions">
+                                <button onclick="loadTasks()" class="btn-icon" title="Rafraîchir">🔄</button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table id="tasks-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Type</th>
+                                        <th>Fréquence</th>
+                                        <th>Prochaine exécution</th>
+                                        <th>Statut</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="6" class="loading">Chargement...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Historique des exécutions -->
+                    <div class="config-section">
+                        <div class="section-header">
+                            <h3>📜 Historique des Exécutions</h3>
+                            <div class="filter-tabs">
+                                <button class="tab-btn active" onclick="filterExecutions('all')">Tous</button>
+                                <button class="tab-btn" onclick="filterExecutions('completed')">✅ Succès</button>
+                                <button class="tab-btn" onclick="filterExecutions('failed')">❌ Échecs</button>
+                                <button class="tab-btn" onclick="filterExecutions('running')">⏳ En cours</button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table id="executions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Tâche</th>
+                                        <th>Type</th>
+                                        <th>Durée</th>
+                                        <th>Statut</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="6" class="loading">Chargement...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Templates disponibles -->
+                    <div class="config-section">
+                        <h3>📦 Templates de Tâches</h3>
+                        <div class="templates-grid" id="templates-grid">
+                            <p class="loading">Chargement...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configuration Page -->
+                <div id="config-page" class="page">
+                    <div class="page-header">
+                        <h2>⚙️ Configuration API</h2>
+                        <div class="header-warning">
+                            <span class="warning-badge">⚠️ Zone sensible - Les changements affectent immédiatement le bot</span>
+                        </div>
+                    </div>
+
+                    <!-- Master Key Section -->
+                    <div class="config-section">
+                        <h3>🔐 Clé Maître de Chiffrement</h3>
+                        <p class="config-description">Nécessaire pour chiffrer/déchiffrer les clés API. Ne la partagez jamais.</p>
+                        
+                        <div class="form-group">
+                            <label>Clé Maître (Fernet)</label>
+                            <div class="input-with-button">
+                                <input type="password" id="master-key" placeholder="gAAAAAB...">
+                                <button onclick="togglePassword('master-key')" class="btn-icon">👁️</button>
+                                <button onclick="generateMasterKey()" class="btn-secondary">🔄 Générer</button>
+                            </div>
+                            <span class="help-text">Format: gAAAAAB... (44 caractères base64)</span>
+                        </div>
+
+                        <div class="form-actions">
+                            <button onclick="saveMasterKey()" class="btn-primary">💾 Sauvegarder la clé maître</button>
+                            <button onclick="testMasterKey()" class="btn-secondary">🧪 Tester</button>
+                        </div>
+                    </div>
+
+                    <!-- API Keys Section -->
+                    <div class="config-section">
+                        <h3>🔑 Clés API</h3>
+                        <p class="config-description">Ces clés sont chiffrées avant stockage. Utilisez "Tester" pour vérifier leur validité.</p>
+
+                        <!-- Gemini -->
+                        <div class="api-key-card">
+                            <div class="api-key-header">
+                                <span class="api-icon">🧠</span>
+                                <div>
+                                    <h4>Google Gemini</h4>
+                                    <span class="api-status" id="gemini-status">Non configuré</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Clé API Gemini</label>
+                                <div class="input-with-button">
+                                    <input type="password" id="gemini-key" placeholder="AIzaSy...">
+                                    <button onclick="togglePassword('gemini-key')" class="btn-icon">👁️</button>
+                                    <button onclick="testGeminiKey()" class="btn-secondary">🧪 Tester</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stripe -->
+                        <div class="api-key-card">
+                            <div class="api-key-header">
+                                <span class="api-icon">💳</span>
+                                <div>
+                                    <h4>Stripe</h4>
+                                    <span class="api-status" id="stripe-status">Non configuré</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Clé Secrète Stripe (sk_test_... ou sk_live_...)</label>
+                                <div class="input-with-button">
+                                    <input type="password" id="stripe-key" placeholder="sk_test_...">
+                                    <button onclick="togglePassword('stripe-key')" class="btn-icon">👁️</button>
+                                    <button onclick="testStripeKey()" class="btn-secondary">🧪 Tester</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Webhook Secret (whsec_...)</label>
+                                <div class="input-with-button">
+                                    <input type="password" id="stripe-webhook-key" placeholder="whsec_...">
+                                    <button onclick="togglePassword('stripe-webhook-key')" class="btn-icon">👁️</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Discord -->
+                        <div class="api-key-card">
+                            <div class="api-key-header">
+                                <span class="api-icon">💬</span>
+                                <div>
+                                    <h4>Discord Bot</h4>
+                                    <span class="api-status" id="discord-status">Non configuré</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Token Discord</label>
+                                <div class="input-with-button">
+                                    <input type="password" id="discord-token" placeholder="MTA...">
+                                    <button onclick="togglePassword('discord-token')" class="btn-icon">👁️</button>
+                                    <button onclick="testDiscordToken()" class="btn-secondary">🧪 Tester</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Supabase -->
+                        <div class="api-key-card">
+                            <div class="api-key-header">
+                                <span class="api-icon">🗄️</span>
+                                <div>
+                                    <h4>Supabase</h4>
+                                    <span class="api-status" id="supabase-status">Non configuré</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>URL Supabase</label>
+                                <input type="url" id="supabase-url-config" placeholder="https://xxxx.supabase.co">
+                            </div>
+                            <div class="form-group">
+                                <label>Clé Service (service_role)</label>
+                                <div class="input-with-button">
+                                    <input type="password" id="supabase-key-config" placeholder="eyJ...">
+                                    <button onclick="togglePassword('supabase-key-config')" class="btn-icon">👁️</button>
+                                    <button onclick="testSupabaseKey()" class="btn-secondary">🧪 Tester</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Redis (Optional) -->
+                        <div class="api-key-card">
+                            <div class="api-key-header">
+                                <span class="api-icon">⚡</span>
+                                <div>
+                                    <h4>Redis (Optionnel)</h4>
+                                    <span class="api-status" id="redis-status">Non configuré</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>URL Redis</label>
+                                <input type="text" id="redis-url" placeholder="redis://localhost:6379/0">
+                                <span class="help-text">Laisser vide pour utiliser Supabase comme fallback</span>
+                            </div>
+                        </div>
+
+                        <div class="form-actions main-actions">
+                            <button onclick="saveAllKeys()" class="btn-primary btn-large">💾 Sauvegarder toutes les clés</button>
+                            <button onclick="exportConfig()" class="btn-secondary btn-large">📥 Exporter .env</button>
+                            <button onclick="importConfig()" class="btn-secondary btn-large">📤 Importer .env</button>
+                        </div>
+                    </div>
+
+                    <!-- Audit Log -->
+                    <div class="config-section">
+                        <h3>📋 Historique des Modifications</h3>
+                        <div class="table-container">
+                            <table id="config-logs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Admin</th>
+                                        <th>Action</th>
+                                        <th>Détails</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="4" class="loading">Chargement...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay de vérification d'authentification -->
+    <div id="auth-check-overlay" class="auth-check-overlay">
+        <div class="spinner"></div>
+        <p>Vérification de l'authentification...</p>
+    </div>
+
+    <!-- User Action Modal -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <h2>Modifier l'utilisateur</h2>
+            <input type="hidden" id="edit-user-id">
+            <label>Plan:</label>
+            <select id="edit-user-plan">
+                <option value="free">Free</option>
+                <option value="basic">Basic</option>
+                <option value="pro">Pro</option>
+                <option value="ultra">Ultra</option>
+            </select>
+            <div class="modal-actions">
+                <button onclick="saveUser()" class="btn-primary">Sauvegarder</button>
+                <button onclick="closeModal()" class="btn-secondary">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Protections avancées contre attaques complexes -->
+    <script src="security-advanced.js"></script>
+    
+    <!-- Scripts applicatifs -->
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+# ============================================
+# SHELLIA AI BOT - DOCKER COMPOSE
+# ============================================
+
+version: '3.8'
+
+services:
+  bot:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    container_name: shellia-bot
+    restart: unless-stopped
+    env_file:
+      - ../bot/.env
+    volumes:
+      - ../bot/logs:/app/logs
+      - ../bot/.env:/app/.env:ro
+    networks:
+      - shellia-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  admin-panel:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile.admin
+    container_name: shellia-admin
+    restart: unless-stopped
+    ports:
+      - "${ADMIN_PANEL_PORT:-8080}:8080"
+    env_file:
+      - ../bot/.env
+    volumes:
+      - ../admin-panel:/app:ro
+    networks:
+      - shellia-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optionnel: Redis pour le cache
+  redis:
+    image: redis:7-alpine
+    container_name: shellia-redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    networks:
+      - shellia-network
+    command: redis-server --appendonly yes
+
+networks:
+  shellia-network:
+    driver: bridge
+
+volumes:
+  redis-data:
