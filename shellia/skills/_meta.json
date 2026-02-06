@@ -1,0 +1,104 @@
+{
+  "name": "Shellia AI Skills",
+  "version": "1.1.0",
+  "description": "Documentation des compétences de Shellia AI pour Maxis Bot",
+  "skills": [
+    {
+      "id": "ticketing",
+      "name": "Gestion des Tickets",
+      "file": "SKILL_TICKETING.md",
+      "icon": "🎫",
+      "priority": "high",
+      "category": "support",
+      "description": "Système de tickets support avec isolation utilisateur (Privacy by Design)"
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing & Communauté",
+      "file": "SKILL_MARKETING.md",
+      "icon": "📢",
+      "priority": "high",
+      "category": "community",
+      "description": "Rôles communautaires, affiliés, événements et gamification"
+    },
+    {
+      "id": "giveaways",
+      "name": "Giveaways Automatiques",
+      "file": "SKILL_GIVEAWAYS.md",
+      "icon": "🎁",
+      "priority": "medium",
+      "category": "engagement",
+      "description": "Système de giveaways déclenchés par paliers de membres avec grade Winner"
+    },
+    {
+      "id": "ecommerce",
+      "name": "E-commerce & Plans",
+      "file": "SKILL_ECOMMERCE.md",
+      "icon": "🛍️",
+      "priority": "high",
+      "category": "monetization",
+      "description": "Boutique, plans (Free/Pro/Ultra/Founder), paiements Stripe, précommandes"
+    },
+    {
+      "id": "weekly_recap",
+      "name": "Rapports Hebdomadaires",
+      "file": "SKILL_WEEKLY_RECAP.md",
+      "icon": "📅",
+      "priority": "medium",
+      "category": "analytics",
+      "description": "Rapports automatisés tous les lundis avec analyse Gemini"
+    },
+    {
+      "id": "buttons",
+      "name": "Button Manager",
+      "file": "SKILL_BUTTONS.md",
+      "icon": "🔘",
+      "priority": "medium",
+      "category": "ui",
+      "description": "Création et gestion de boutons Discord stylés"
+    },
+    {
+      "id": "embeds",
+      "name": "Embed Builder (Humbles)",
+      "file": "SKILL_EMBEDS.md",
+      "icon": "📦",
+      "priority": "high",
+      "category": "ui",
+      "description": "Builder d'embeds riches style MEE6 avec boutons de paiement intégrés"
+    },
+    {
+      "id": "affiliation",
+      "name": "Système d'Affiliation",
+      "file": "SKILL_AFFILIATION.md",
+      "icon": "🤝",
+      "priority": "high",
+      "category": "monetization",
+      "description": "Programme d'affiliation complet avec tiers et commissions"
+    },
+    {
+      "id": "quota",
+      "name": "Quota Manager",
+      "file": "SKILL_QUOTA.json",
+      "icon": "📊",
+      "priority": "high",
+      "category": "monetization",
+      "description": "Gestion des quotas avec achat via Stripe (optimisé rentabilité)"
+    },
+    {
+      "id": "server_lock",
+      "name": "Server Lock",
+      "file": "SKILL_SERVER_LOCK.json",
+      "icon": "🔒",
+      "priority": "high",
+      "category": "security",
+      "description": "Verrouillage complet du serveur - bloque toute entrée"
+    }
+  ],
+  "metadata": {
+    "last_updated": "2024-01-20",
+    "maintainer": "Shellia AI Team",
+    "language": "fr",
+    "api_version": "2.0",
+    "api_base_url": "http://localhost:8080/api"
+  }
+}

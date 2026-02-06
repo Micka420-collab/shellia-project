@@ -1,0 +1,55 @@
+{
+  "id": "embeds",
+  "name": "Embed Builder (Humbles)",
+  "version": "1.0.0",
+  "icon": "📦",
+  "priority": "high",
+  "category": "ui",
+  "description": "Builder d'embeds Discord riches style MEE6 avec boutons de paiement intégrés",
+  "features": [
+    "Éditeur visuel drag & drop",
+    "Preview temps réel Discord",
+    "Templates prédéfinis",
+    "Boutons avec actions multiples",
+    "Intégration Stripe native",
+    "Analytics détaillés",
+    "Programmation d'envoi"
+  ],
+  "templates": [
+    {"id": "welcome", "name": "Message de Bienvenue", "icon": "👋"},
+    {"id": "promo", "name": "Promotion/Offre", "icon": "🏷️"},
+    {"id": "announcement", "name": "Annonce", "icon": "📢"},
+    {"id": "giveaway", "name": "Giveaway", "icon": "🎁"},
+    {"id": "rules", "name": "Règlement", "icon": "📜"},
+    {"id": "shop", "name": "Boutique", "icon": "🛍️"}
+  ],
+  "button_actions": [
+    {"id": "link", "description": "Ouvrir un lien"},
+    {"id": "payment", "description": "Paiement Stripe"},
+    {"id": "ticket", "description": "Créer un ticket"},
+    {"id": "giveaway", "description": "Rejoindre giveaway"},
+    {"id": "upgrade", "description": "Afficher plans"},
+    {"id": "feedback", "description": "Modal feedback"},
+    {"id": "custom", "description": "Action personnalisée"}
+  ],
+  "limits": {
+    "fields_max": 25,
+    "buttons_per_row": 5,
+    "button_rows_max": 5,
+    "description_max_chars": 4096,
+    "field_value_max_chars": 1024
+  },
+  "commands": [
+    "!embed_create",
+    "!embed_list",
+    "!embed_edit",
+    "!embed_send",
+    "!embed_duplicate",
+    "!embed_delete",
+    "!embed_stats"
+  ],
+  "database_tables": ["discord_embeds", "embed_analytics"],
+  "dependencies": ["stripe", "ticketing", "giveaways"],
+  "author": "Shellia AI",
+  "status": "production"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "weekly_recap",
+  "name": "Rapports Hebdomadaires",
+  "version": "1.0.0",
+  "icon": "📅",
+  "priority": "medium",
+  "category": "analytics",
+  "description": "Génération automatique de rapports hebdomadaires avec analyse IA Gemini",
+  "schedule": {
+    "cron": "0 9 * * 1",
+    "timezone": "Europe/Paris",
+    "description": "Tous les lundis à 9h00"
+  },
+  "metrics_collected": [
+    "new_members",
+    "total_members",
+    "active_members",
+    "messages_sent",
+    "growth_rate",
+    "revenue",
+    "new_orders",
+    "churn_rate",
+    "tickets_created",
+    "tickets_resolved",
+    "avg_resolution_time",
+    "satisfaction_score",
+    "referrals",
+    "social_mentions"
+  ],
+  "report_sections": [
+    "📈 Communauté",
+    "💰 Économie",
+    "🎫 Support",
+    "🎯 Marketing",
+    "⚡ Technique",
+    "💡 Recommandations"
+  ],
+  "ai_analysis": {
+    "provider": "Google Gemini",
+    "features": ["trend_detection", "anomaly_detection", "recommendations"]
+  },
+  "commands": [
+    "!recap_generate",
+    "!recap_stats",
+    "!recap_config"
+  ],
+  "dependencies": ["gemini_api"],
+  "author": "Shellia AI",
+  "status": "production"
+}

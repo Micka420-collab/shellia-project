@@ -12,7 +12,7 @@ Tu dois créer 2 VMs et déployer le projet dessus.
 
 Créer et configurer :
 1. **VM 1** : Shellia (contrôleur IA)
-2. **VM 2** : Maxis (bot e-commerce)
+2. **VM 2** : Maxis (bot e-commerce + tickets)
 3. Les connecter via API
 
 ---
@@ -31,7 +31,7 @@ https://github.com/Micka420-collab/shellia-project.git
 
 **Specs VM :**
 - Ubuntu 22.04 LTS
-- 2-4 vCPU, 4-8 GB RAM, 30 GB SSD
+- 2-4 vCPU, 4-8 GB RAM, 50 GB SSD
 
 **Installation :**
 ```bash
@@ -62,7 +62,7 @@ SUPABASE_KEY=...
 STRIPE_SECRET_KEY=...
 ```
 
-**Scripts SQL (Supabase) :**
+**Scripts SQL (Supabase) - IMPORTANT :**
 Exécuter dans l'ordre :
 1. `deployment/supabase_schema.sql`
 2. `deployment/auth_schema.sql`
@@ -71,6 +71,7 @@ Exécuter dans l'ordre :
 5. `deployment/openclaw_schema.sql`
 6. `deployment/preorder_schema.sql`
 7. `deployment/marketing_roles_schema.sql`
+8. `deployment/tickets_schema.sql` ⭐ NOUVEAU
 
 **Lancer :**
 ```bash
@@ -131,25 +132,84 @@ Dans Discord, sur le serveur Shellia :
 
 ## 🔧 CONFIGURATION APRES DEPLOIEMENT
 
-### Channels Discord à créer :
+### 1. Channels Discord à créer sur Maxis :
 
-Sur le serveur Maxis :
+**Publics :**
 - `#🛍️│boutique` - Shop
 - `#🎁│giveaways` - Giveaways
 - `#🛒│pré-achats` - Pré-achats
+- `#🎫│support` - Support tickets (création tickets)
+
+**Privés (rôles) :**
 - `#🏆│ambassadeurs` - Rôle ambassadeur
 - `#📢│influenceurs` - Rôle influenceur
+- `#🎫│tickets-admin` - Gestion tickets (admin only)
 - `#📊│admin-stats` - Stats admin (privé)
 
-### Configurer l'ouverture officielle :
+### 2. Configurer l'ouverture officielle :
 ```
 !opening_setup 2026 2 15 18
 ```
 
-### Configurer récap hebdo :
+### 3. Configurer récap hebdo :
 ```
 !recap_setup #📊│admin-stats 0 9
 ```
+
+### 4. Configurer le système de tickets :
+
+Dans le fichier `.env` de Maxis (VM 2), ajoute :
+```env
+TICKETS_CHANNEL_ID=ID_DU_CHANNEL_SUPPORT
+TICKETS_ADMIN_CHANNEL_ID=ID_DU_CHANNEL_TICKETS_ADMIN
+```
+
+Puis redémarrer :
+```bash
+docker-compose restart maxis
+```
+
+---
+
+## 🎫 SYSTÈME DE TICKETS
+
+### Pour les utilisateurs
+Les utilisateurs peuvent créer des tickets via Discord :
+```
+!ticket_create "Problème de paiement" general medium Description du problème...
+```
+
+**Catégories disponibles :**
+- `general` - Questions générales
+- `billing` - Facturation
+- `technical` - Support technique
+- `bug` - Signalement de bugs
+- `account` - Gestion compte
+- `feature_request` - Suggestions
+
+**Priorités :**
+- `critical` - Critique (12h SLA)
+- `high` - Haute (24h SLA)
+- `medium` - Moyenne (48h SLA)
+- `low` - Basse (72h SLA)
+
+### Pour les admins
+Gestion via Discord :
+```
+!ticket_assign TKT001 @Admin     → Assigner ticket
+!ticket_stats                     → Voir stats
+!ticket_reply TKT001 "Message"    → Répondre
+```
+
+Gestion via Web Dashboard :
+- URL : `https://IP_VM2/admin-panel/tickets.html`
+- Login : Discord OAuth
+- Fonctionnalités : Liste, filtres, réponse, assignation, fermeture
+
+### Isolation stricte (IMPORTANT)
+- Un utilisateur ne voit QUE ses propres tickets
+- Les messages internes (admin) sont invisibles aux users
+- La base de données utilise RLS (Row Level Security)
 
 ---
 
@@ -159,11 +219,12 @@ Tu peux contrôler Maxis avec :
 
 ```
 !maxis status           → Voir si Maxis est en ligne
-!maxis analytics        → Statistiques ventes
-!maxis promo 20% pro 48h → Lancer promotion -20%
-!maxis giveaway 100     → Lancer giveaway 100 membres
+!maxis analytics        → Stats détaillées
+!maxis promo 20% pro 48h → Lancer promotion
+!maxis giveaway 100     → Lancer giveaway
 !maxis restart          → Redémarrer Maxis
 !maxis report           → Rapport complet
+!maxis execute !help    → Exécuter commande sur Maxis
 ```
 
 ---
@@ -181,8 +242,13 @@ curl http://localhost:8080/health
 - Vérifier que `MAXIS_API_KEY` est IDENTIQUE sur les 2 VMs
 - Vérifier que VM 1 peut joindre VM 2 sur le port 8080
 
+**Tickets ne fonctionnent pas ?**
+- Vérifier que les scripts SQL sont exécutés (tickets_schema.sql)
+- Vérifier les IDs de channels dans .env
+- Vérifier les permissions du bot dans Discord
+
 **Besoin d'aide ?** Demande à l'admin !
 
 ---
 
-✅ **Une fois fait, tu contrôles Maxis à distance !**
+✅ **Une fois fait, tu contrôles Maxis à distance et gères les tickets !**

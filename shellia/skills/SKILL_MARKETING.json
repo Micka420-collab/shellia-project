@@ -1,0 +1,47 @@
+{
+  "id": "marketing",
+  "name": "Marketing & Communauté",
+  "version": "1.0.0",
+  "icon": "📢",
+  "priority": "high",
+  "category": "community",
+  "description": "Gestion des rôles marketing, affiliés, événements communautaires et gamification",
+  "roles": [
+    {"id": "ambassador", "name": "Ambassador", "emoji": "🌟", "commission": "20%"},
+    {"id": "influencer", "name": "Influencer", "emoji": "📱", "benefits": ["early_access", "free_products"]},
+    {"id": "creator", "name": "Creator", "emoji": "🎨", "benefits": ["branding_resources"]},
+    {"id": "helper", "name": "Helper", "emoji": "🆘", "benefits": ["moderation_light"]},
+    {"id": "event_host", "name": "Event Host", "emoji": "🎉", "benefits": ["create_events"]},
+    {"id": "beta_tester", "name": "Beta Tester", "emoji": "🧪", "benefits": ["beta_access"]},
+    {"id": "partner", "name": "Partner", "emoji": "🤝", "benefits": ["co_marketing", "revenue_share"]}
+  ],
+  "gamification": {
+    "points_system": {
+      "message_sent": 1,
+      "help_answered": 10,
+      "invite_accepted": 50,
+      "content_featured": 100,
+      "bug_report_valid": 25,
+      "review_5_stars": 20
+    },
+    "levels": [
+      {"name": "Bronze", "points": "0-499", "badge": "🥉"},
+      {"name": "Silver", "points": "500-1999", "badge": "🥈"},
+      {"name": "Gold", "points": "2000-4999", "badge": "🥇"},
+      {"name": "Diamond", "points": "5000+", "badge": "💎"}
+    ]
+  },
+  "commands": [
+    "!marketing_role assign",
+    "!marketing_role remove",
+    "!marketing_stats",
+    "!affiliate create",
+    "!affiliate stats",
+    "!event create",
+    "!points",
+    "!leaderboard"
+  ],
+  "dependencies": ["affiliation"],
+  "author": "Shellia AI",
+  "status": "production"
+}

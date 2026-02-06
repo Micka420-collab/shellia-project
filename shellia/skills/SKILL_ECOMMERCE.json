@@ -1,0 +1,61 @@
+{
+  "id": "ecommerce",
+  "name": "E-commerce & Plans",
+  "version": "1.0.0",
+  "icon": "🛍️",
+  "priority": "high",
+  "category": "monetization",
+  "description": "Système de boutique, plans d'abonnement, paiements Stripe et précommandes",
+  "plans": [
+    {
+      "id": "free",
+      "name": "Free",
+      "price": 0,
+      "emoji": "🆓",
+      "features": ["50 requêtes/jour", "Support communautaire"]
+    },
+    {
+      "id": "pro",
+      "name": "Pro",
+      "price_monthly": 9.99,
+      "price_yearly": 95.99,
+      "emoji": "⭐",
+      "features": ["Requêtes illimitées", "Support 24h", "Accès bêta"]
+    },
+    {
+      "id": "ultra",
+      "name": "Ultra",
+      "price_monthly": 19.99,
+      "price_yearly": 191.99,
+      "emoji": "💎",
+      "features": ["Tout Pro", "Support VIP 4h", "API privée"]
+    },
+    {
+      "id": "founder",
+      "name": "Founder",
+      "price_onetime": 99.00,
+      "emoji": "👑",
+      "features": ["Ultra à vie", "Channel exclusif", "Vote roadmap"]
+    }
+  ],
+  "preorder_tiers": {
+    "early_bird": {"discount": 30, "limit": 50, "name": "Early Bird"},
+    "founder": {"discount": 20, "limit": 100, "name": "Founder"},
+    "supporter": {"discount": 10, "limit": 200, "name": "Supporter"},
+    "regular": {"discount": 0, "limit": null, "name": "Regular"}
+  },
+  "payment_provider": "Stripe",
+  "commands": [
+    "!shop",
+    "!plans",
+    "!upgrade",
+    "!preorder",
+    "!coupon",
+    "!billing",
+    "!invoice"
+  ],
+  "database_tables": ["orders", "subscriptions", "preorders", "coupons"],
+  "dependencies": ["stripe"],
+  "author": "Shellia AI",
+  "status": "production"
+}

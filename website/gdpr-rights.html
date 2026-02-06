@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vos Droits RGPD - Shellia AI</title>
+    <meta name="description" content="Exercez vos droits RGPD avec Shellia AI - Accès, rectification, suppression et portabilité de vos données.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Space Grotesk', 'sans-serif'] },
+                    colors: {
+                        brand: { 50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d', 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 700: '#b45309', 800: '#92400e', 900: '#78350f', 950: '#451a03' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .gradient-text { background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .right-card { transition: all 0.3s ease; }
+        .right-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -12px rgba(245, 158, 11, 0.25); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-8">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-brand-400 to-brand-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl">Shellia AI</span>
+                    </a>
+                    <div class="hidden md:flex items-center gap-6">
+                        <a href="features.html" class="text-gray-600 hover:text-brand-600 transition-colors">Fonctionnalités</a>
+                        <a href="pricing.html" class="text-gray-600 hover:text-brand-600 transition-colors">Tarifs</a>
+                        <a href="documentation.html" class="text-gray-600 hover:text-brand-600 transition-colors">Documentation</a>
+                        <a href="community.html" class="text-gray-600 hover:text-brand-600 transition-colors">Communauté</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="/dashboard" class="hidden sm:block text-gray-600 hover:text-brand-600 transition-colors">Connexion</a>
+                    <a href="/invite" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-brand-500/30 flex items-center gap-2">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        Ajouter à Discord
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-16 bg-gradient-to-br from-brand-50 via-white to-brand-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 bg-brand-100 text-brand-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                <span>RGPD - Règlement Général sur la Protection des Données</span>
+            </div>
+            <h1 class="font-display text-4xl md:text-5xl font-bold mb-6">
+                Vos <span class="gradient-text">droits</span> sur vos données
+            </h1>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                Le RGPD vous donne un contrôle total sur vos données personnelles. Voici comment exercer vos droits avec Shellia AI.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="right-card glass-card rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="eye" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Droit d'accès</h3>
+                    <p class="text-gray-600 text-sm mb-4">Article 15 - Consultez toutes les données que nous détenons sur vous.</p>
+                    <div class="bg-brand-50 rounded-lg p-3">
+                        <p class="text-sm text-brand-800"><strong>Comment :</strong> Dashboard → Paramètres → Exporter mes données</p>
+                    </div>
+                </div>
+
+                <div class="right-card glass-card rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="edit-3" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Droit de rectification</h3>
+                    <p class="text-gray-600 text-sm mb-4">Article 16 - Corrigez vos données si elles sont inexactes.</p>
+                    <div class="bg-brand-50 rounded-lg p-3">
+                        <p class="text-sm text-brand-800"><strong>Comment :</strong> Mettez à jour votre profil Discord, la synchro est automatique</p>
+                    </div>
+                </div>
+
+                <div class="right-card glass-card rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="trash-2" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Droit à l'effacement</h3>
+                    <p class="text-gray-600 text-sm mb-4">Article 17 - "Droit à l'oubli" - Supprimez toutes vos données.</p>
+                    <div class="bg-brand-50 rounded-lg p-3">
+                        <p class="text-sm text-brand-800"><strong>Comment :</strong> Dashboard → Paramètres → Supprimer mon compte</p>
+                    </div>
+                </div>
+
+                <div class="right-card glass-card rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="pause-circle" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Droit à la limitation</h3>
+                    <p class="text-gray-600 text-sm mb-4">Article 18 - Limitez temporairement le traitement de vos données.</p>
+                    <div class="bg-brand-50 rounded-lg p-3">
+                        <p class="text-sm text-brand-800"><strong>Comment :</strong> Désactivez "Sauvegarder l'historique" dans les paramètres</p>
+                    </div>
+                </div>
+
+                <div class="right-card glass-card rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="download" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Droit à la portabilité</h3>
+                    <p class="text-gray-600 text-sm mb-4">Article 20 - Recevez vos données dans un format réutilisable.</p>
+                    <div class="bg-brand-50 rounded-lg p-3">
+                        <p class="text-sm text-brand-800"><strong>Comment :</strong> Dashboard → Exporter mes données (format JSON)</p>
+                    </div>
+                </div>
+
+                <div class="right-card glass-card rounded-2xl p-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center mb-4">
+                        <i data-lucide="x-circle" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-2">Droit d'opposition</h3>
+                    <p class="text-gray-600 text-sm mb-4">Article 21 - Vous opposez au traitement de vos données.</p>
+                    <div class="bg-brand-50 rounded-lg p-3">
+                        <p class="text-sm text-brand-800"><strong>Comment :</strong> Désactivez les notifications ou contactez le DPO</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-b from-white to-brand-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-2xl p-8 md:p-12">
+                <h2 class="font-display text-2xl font-bold mb-6 text-center">Comment exercer vos droits</h2>
+                
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                        <div>
+                            <h3 class="font-semibold mb-1">Via votre Dashboard</h3>
+                            <p class="text-gray-600 text-sm">La plupart des droits peuvent être exercés directement depuis votre compte : export de données, suppression de compte, gestion des préférences.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                        <div>
+                            <h3 class="font-semibold mb-1">Par email au DPO</h3>
+                            <p class="text-gray-600 text-sm">Pour les demandes complexes ou spécifiques, contactez notre Délégué à la Protection des Données à <a href="mailto:dpo@shellia.ai" class="text-brand-600 hover:underline">dpo@shellia.ai</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                        <div>
+                            <h3 class="font-semibold mb-1">Délai de réponse</h3>
+                            <p class="text-gray-600 text-sm">Nous répondons à toutes les demandes dans un délai maximum de 30 jours conformément au RGPD. Les demandes d'accès sont généralement traitées sous 48h.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-6 bg-gray-50 rounded-xl">
+                    <h3 class="font-semibold mb-4">Formulaire de demande</h3>
+                    <p class="text-gray-600 text-sm mb-4">Vous pouvez utiliser ce modèle pour votre demande :</p>
+                    <div class="bg-white rounded-lg p-4 border border-gray-200 font-mono text-sm text-gray-600">
+                        <p>Objet : Demande d'exercice de droit RGPD - [précisez le droit]</p>
+                        <p>&nbsp;</p>
+                        <p>Madame, Monsieur,</p>
+                        <p>&nbsp;</p>
+                        <p>Je soussigné(e) [NOM Prénom],</p>
+                        <p>Demande par la présente l'exercice de mon droit [précisez] concernant mes données personnelles.</p>
+                        <p>&nbsp;</p>
+                        <p>Identifiant Discord : [votre ID]</p>
+                        <p>Email associé : [votre email]</p>
+                        <p>&nbsp;</p>
+                        <p>Cordialement,</p>
+                        <p>[Signature]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-2xl p-8 border-2 border-brand-200">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-brand-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="alert-triangle" class="w-6 h-6 text-brand-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-display text-xl font-bold mb-2">Réclamation auprès de la CNIL</h3>
+                        <p class="text-gray-600 mb-4">
+                            Si vous estimez que nous ne respectons pas vos droits, vous avez le droit d'introduire une réclamation auprès de la Commission Nationale de l'Informatique et des Libertés (CNIL).
+                        </p>
+                        <a href="https://www.cnil.fr/fr/plaintes" target="_blank" class="inline-flex items-center gap-2 text-brand-600 font-medium hover:text-brand-700">
+                            <span>Déposer une réclamation</span>
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-b from-brand-50 to-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="font-display text-2xl font-bold text-center mb-8">Documents connexes</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <a href="privacy.html" class="glass-card rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i data-lucide="shield" class="w-8 h-8 text-brand-500 mx-auto mb-3"></i>
+                    <h3 class="font-semibold mb-1">Confidentialité</h3>
+                    <p class="text-sm text-gray-600">Politique complète</p>
+                </a>
+                <a href="terms.html" class="glass-card rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i data-lucide="file-text" class="w-8 h-8 text-brand-500 mx-auto mb-3"></i>
+                    <h3 class="font-semibold mb-1">CGU</h3>
+                    <p class="text-sm text-gray-600">Conditions d'utilisation</p>
+                </a>
+                <a href="cookies.html" class="glass-card rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i data-lucide="cookie" class="w-8 h-8 text-brand-500 mx-auto mb-3"></i>
+                    <h3 class="font-semibold mb-1">Cookies</h3>
+                    <p class="text-sm text-gray-600">Politique des cookies</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-brand-400 to-brand-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl text-white">Shellia AI</span>
+                    </div>
+                    <p class="text-sm">Propulsé par NEXTENDO</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Produit</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="features.html" class="hover:text-white transition-colors">Fonctionnalités</a></li>
+                        <li><a href="pricing.html" class="hover:text-white transition-colors">Tarifs</a></li>
+                        <li><a href="documentation.html" class="hover:text-white transition-colors">Documentation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Ressources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="docs/QUICKSTART.md" class="hover:text-white transition-colors">Guide de démarrage</a></li>
+                        <li><a href="docs/API_DOCUMENTATION.md" class="hover:text-white transition-colors">API</a></li>
+                        <li><a href="community.html" class="hover:text-white transition-colors">Communauté</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Légal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="privacy.html" class="hover:text-white transition-colors">Confidentialité</a></li>
+                        <li><a href="terms.html" class="hover:text-white transition-colors">Conditions</a></li>
+                        <li><a href="cookies.html" class="hover:text-white transition-colors">Cookies</a></li>
+                        <li><a href="gdpr-rights.html" class="hover:text-white transition-colors">Droits RGPD</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm">© 2026 Shellia AI - NEXTENDO. Tous droits réservés.</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://github.com/nextendo" class="hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                    <a href="https://discord.gg/shellia" class="hover:text-white transition-colors"><i data-lucide="message-circle" class="w-5 h-5"></i></a>
+                    <a href="https://twitter.com/shelliaai" class="hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

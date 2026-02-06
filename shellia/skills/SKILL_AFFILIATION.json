@@ -1,0 +1,46 @@
+{
+  "id": "affiliation",
+  "name": "Système d'Affiliation",
+  "version": "1.0.0",
+  "icon": "🤝",
+  "priority": "high",
+  "category": "monetization",
+  "description": "Programme d'affiliation complet avec tiers croissants et commissions",
+  "tiers": [
+    {"id": "bronze", "name": "Bronze", "conversions_min": 0, "commission": 15, "emoji": "🥉"},
+    {"id": "silver", "name": "Silver", "conversions_min": 10, "commission": 20, "emoji": "🥈"},
+    {"id": "gold", "name": "Gold", "conversions_min": 50, "commission": 25, "emoji": "🥇"},
+    {"id": "platinum", "name": "Platinum", "conversions_min": 100, "commission": 30, "emoji": "💎"},
+    {"id": "diamond", "name": "Diamond", "conversions_min": 500, "commission": 35, "emoji": "👑"}
+  ],
+  "commission_rules": {
+    "validation_days": 30,
+    "cookie_days": 30,
+    "min_payout": 50,
+    "self_referral": false,
+    "auto_approve": true
+  },
+  "payout_methods": [
+    {"id": "paypal", "name": "PayPal"},
+    {"id": "bank", "name": "Virement Bancaire"},
+    {"id": "crypto", "name": "Crypto"}
+  ],
+  "monthly_rewards": {
+    "rank_1": {"prize": "€100 + Badge Or", "description": "Top affilié du mois"},
+    "rank_2": {"prize": "€50 + Badge Argent", "description": "2ème place"},
+    "rank_3": {"prize": "€25 + Badge Bronze", "description": "3ème place"},
+    "top_10": {"prize": "Pro 1 mois", "description": "Top 10"}
+  },
+  "commands": [
+    "!affiliate",
+    "!affiliate_join",
+    "!affiliate_stats",
+    "!affiliate_code",
+    "!affiliate_payout",
+    "!affiliate_leaderboard"
+  ],
+  "database_tables": ["affiliates", "conversions", "payouts"],
+  "dependencies": ["stripe", "ecommerce"],
+  "author": "Shellia AI",
+  "status": "production"
+}

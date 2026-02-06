@@ -1,0 +1,36 @@
+{
+  "id": "server_lock",
+  "name": "Server Lock",
+  "version": "1.0.0",
+  "icon": "🔒",
+  "priority": "high",
+  "category": "security",
+  "description": "Verrouillage complet du serveur Discord - empêche toute entrée même avec invitations",
+  "features": [
+    "Blocage total des nouvelles entrées",
+    "Révocation de toutes les invitations",
+    "Désactivation du widget serveur",
+    "Désactivation du discovery",
+    "Blocage création d'invitations",
+    "Kick des nouveaux qui essaient de rejoindre",
+    "Kick massif optionnel (non-staff)",
+    "Notification DM aux expulsés"
+  ],
+  "permissions_required": ["administrator"],
+  "commands": [
+    "!server_lock [raison]",
+    "!server_unlock",
+    "!server_status",
+    "!server_kick_all [raison]"
+  ],
+  "database_tables": ["server_lock"],
+  "events": [
+    "on_member_join",
+    "on_invite_create"
+  ],
+  "security_level": "maximum",
+  "note": "Seuls les administrateurs peuvent déverrouiller",
+  "dependencies": [],
+  "author": "Shellia AI",
+  "status": "production"
+}

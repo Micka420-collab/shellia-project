@@ -1,0 +1,38 @@
+{
+  "id": "quota",
+  "name": "Quota Manager",
+  "version": "1.0.0",
+  "icon": "📊",
+  "priority": "high",
+  "category": "monetization",
+  "description": "Gestion des quotas utilisateurs avec achat via Stripe - optimisé pour rentabilité",
+  "plan_quotas": {
+    "free": 50,
+    "pro": 1000,
+    "ultra": 5000,
+    "founder": 10000
+  },
+  "purchase_packages": [
+    {"id": "quota_100", "amount": 100, "price_cents": 299, "price_display": "€2.99", "popular": false},
+    {"id": "quota_500", "amount": 500, "price_cents": 999, "price_display": "€9.99", "popular": false},
+    {"id": "quota_1000", "amount": 1000, "price_cents": 1499, "price_display": "€14.99", "popular": true},
+    {"id": "quota_5000", "amount": 5000, "price_cents": 4999, "price_display": "€49.99", "discount": 17},
+    {"id": "quota_10000", "amount": 10000, "price_cents": 8999, "price_display": "€89.99", "discount": 40},
+    {"id": "quota_50000", "amount": 50000, "price_cents": 34999, "price_display": "€349.99", "discount": 53}
+  ],
+  "features": [
+    "Quota quotidien selon plan",
+    "Quota acheté (n'expire jamais)",
+    "Prix dégressifs à volume",
+    "Priorisation quota quotidien > acheté",
+    "Alertes quota faible"
+  ],
+  "commands": [
+    "!quota",
+    "!buy_quota"
+  ],
+  "database_tables": ["user_quotas", "quota_purchase_attempts"],
+  "dependencies": ["stripe"],
+  "author": "Shellia AI",
+  "status": "production"
+}

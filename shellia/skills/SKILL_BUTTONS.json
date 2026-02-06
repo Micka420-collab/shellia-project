@@ -1,0 +1,41 @@
+{
+  "id": "buttons",
+  "name": "Button Manager",
+  "version": "1.0.0",
+  "icon": "🔘",
+  "priority": "medium",
+  "category": "ui",
+  "description": "Création et gestion de boutons Discord stylés avec analytics",
+  "styles": [
+    {"id": "primary", "color": "#5865F2", "usage": "Action principale"},
+    {"id": "secondary", "color": "#4f545c", "usage": "Action secondaire"},
+    {"id": "success", "color": "#3ba55d", "usage": "Succès/Confirmation"},
+    {"id": "danger", "color": "#ed4245", "usage": "Danger/Annuler"},
+    {"id": "premium", "color": "#ffd700", "usage": "Premium/Spécial"}
+  ],
+  "button_types": [
+    {"id": "ticket_create", "label": "Créer un ticket", "emoji": "🎫"},
+    {"id": "shop_access", "label": "Boutique", "emoji": "🛍️"},
+    {"id": "plan_upgrade", "label": "Upgrade", "emoji": "⭐"},
+    {"id": "support_faq", "label": "FAQ", "emoji": "❓"},
+    {"id": "giveaway_join", "label": "Participer", "emoji": "🎁"},
+    {"id": "feedback", "label": "Feedback", "emoji": "💬"},
+    {"id": "report", "label": "Signaler", "emoji": "🚨"}
+  ],
+  "analytics": {
+    "metrics": ["clicks", "unique_users", "conversion_rate", "ctr"],
+    "retention": "30 jours"
+  },
+  "commands": [
+    "!button_create",
+    "!button_remove",
+    "!button_list",
+    "!button_update",
+    "!button_stats",
+    "!button_templates"
+  ],
+  "database_tables": ["discord_buttons", "button_analytics"],
+  "dependencies": [],
+  "author": "Shellia AI",
+  "status": "production"
+}

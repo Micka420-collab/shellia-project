@@ -1,0 +1,36 @@
+{
+  "id": "giveaways",
+  "name": "Giveaways Automatiques",
+  "version": "1.0.0",
+  "icon": "🎁",
+  "priority": "medium",
+  "category": "engagement",
+  "description": "Système de giveaways automatiques déclenchés par paliers de membres avec récompenses Winner",
+  "milestones": {
+    "50": {"prize": "Pro 1 mois", "winners": 1, "duration_hours": 48},
+    "100": {"prize": "Pro 3 mois", "winners": 2, "duration_hours": 72},
+    "250": {"prize": "Ultra 1 mois", "winners": 3, "duration_hours": 96},
+    "500": {"prize": "Ultra 3 mois", "winners": 5, "duration_hours": 120},
+    "1000": {"prize": "Founder Lifetime", "winners": 1, "duration_hours": 168},
+    "2500": {"prize": "Founder Lifetime x3", "winners": 3, "duration_hours": 168},
+    "5000": {"prize": "€500 cash + Founder", "winners": 5, "duration_hours": 168}
+  },
+  "winner_perks": {
+    "role": "🏆 Winner",
+    "duration": "3 days",
+    "plan_upgrade": "Pro 3 jours",
+    "permissions": ["access_pro_channels", "priority_support", "exclusive_commands"]
+  },
+  "commands": [
+    "!giveaway create",
+    "!giveaway end",
+    "!giveaway reroll",
+    "!giveaway list",
+    "!giveaway stats",
+    "!giveaway delete"
+  ],
+  "database_tables": ["giveaways", "giveaway_participants", "giveaway_winners"],
+  "dependencies": ["ecommerce"],
+  "author": "Shellia AI",
+  "status": "production"
+}

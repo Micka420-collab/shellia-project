@@ -77,26 +77,6 @@ deployment/
 ```
 
 ---
-
-## 🚀 COMMANDES GIT À EXÉCUTER
-
-```bash
-# 1. Aller dans le répertoire
-cd "c:\Users\Mick\Downloads\Kimi_Agent_Discord Channel Setup & API (1)\shellia-project"
-
-# 2. Vérifier tous les fichiers sont là
-ls -la
-
-# 3. Initialiser Git (si pas déjà fait)
-git init
-git remote add origin https://github.com/Micka420-collab/shellia-project.git
-
-# 4. Ajouter tous les fichiers
-git add .
-
-# 5. Créer le commit
-git commit -m "🚀 v2.1-PLUS: Système complet avec Marketing & Pré-achat
-
 Fonctionnalités ajoutées:
 - 🛍️ Système de Pré-achat (Early Bird -30%, Founder -20%, etc.)
 - 🎭 Rôles Marketing (Ambassadeur, Influenceur, Créateur, Helper, Event Host, Beta Tester, Partenaire)

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions d'Utilisation - Shellia AI</title>
+    <meta name="description" content="Conditions d'utilisation de Shellia AI - CGU et conditions de service.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fffbeb', 100: '#fef3c7', 200: '#fde68a', 300: '#fcd34d',
+                            400: '#fbbf24', 500: '#f59e0b', 600: '#d97706', 700: '#b45309',
+                            800: '#92400e', 900: '#78350f', 950: '#451a03',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .gradient-text { background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .prose h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem; color: #111827; }
+        .prose h3 { font-weight: 600; font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937; }
+        .prose p { margin-bottom: 1rem; line-height: 1.7; color: #4b5563; }
+        .prose ul { margin-bottom: 1rem; padding-left: 1.5rem; }
+        .prose li { margin-bottom: 0.5rem; color: #4b5563; }
+        .prose strong { color: #111827; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-8">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-brand-400 to-brand-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl">Shellia AI</span>
+                    </a>
+                    <div class="hidden md:flex items-center gap-6">
+                        <a href="features.html" class="text-gray-600 hover:text-brand-600 transition-colors">Fonctionnalités</a>
+                        <a href="pricing.html" class="text-gray-600 hover:text-brand-600 transition-colors">Tarifs</a>
+                        <a href="documentation.html" class="text-gray-600 hover:text-brand-600 transition-colors">Documentation</a>
+                        <a href="community.html" class="text-gray-600 hover:text-brand-600 transition-colors">Communauté</a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="/dashboard" class="hidden sm:block text-gray-600 hover:text-brand-600 transition-colors">Connexion</a>
+                    <a href="/invite" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-brand-500/30 flex items-center gap-2">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        Ajouter à Discord
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-16 bg-gradient-to-br from-brand-50 via-white to-brand-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="font-display text-4xl md:text-5xl font-bold mb-6">
+                Conditions <span class="gradient-text">d'Utilisation</span>
+            </h1>
+            <p class="text-gray-600 text-lg">Dernière mise à jour : Février 2026</p>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-2xl p-8 md:p-12">
+                <div class="prose max-w-none">
+                    <p class="text-lg">
+                        En utilisant Shellia AI, vous acceptez les présentes conditions d'utilisation. Veuillez les lire attentivement.
+                    </p>
+
+                    <h2>1. Définitions</h2>
+                    <ul>
+                        <li><strong>Service :</strong> Shellia AI, l'assistant IA pour e-commerçants</li>
+                        <li><strong>Utilisateur :</strong> Toute personne utilisant le Service</li>
+                        <li><strong>Compte :</strong> L'accès personnel créé via Discord OAuth2</li>
+                        <li><strong>Contenu :</strong> Les textes, images, et autres données générées par l'IA</li>
+                        <li><strong>Quota :</strong> Le nombre de requêtes disponibles pour un Utilisateur</li>
+                    </ul>
+
+                    <h2>2. Acceptation des conditions</h2>
+                    <p>
+                        En créant un compte et en utilisant Shellia AI, vous acceptez sans réserve les présentes CGU. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le Service.
+                    </p>
+
+                    <h2>3. Inscription et compte</h2>
+                    <h3>3.1 Conditions d'éligibilité</h3>
+                    <p>Pour utiliser Shellia AI, vous devez :</p>
+                    <ul>
+                        <li>Avoir au moins 16 ans (ou l'âge légal dans votre pays)</li>
+                        <li>Posséder un compte Discord valide</li>
+                        <li>Fournir des informations exactes et à jour</li>
+                    </ul>
+
+                    <h3>3.2 Sécurité du compte</h3>
+                    <p>Vous êtes responsable de :</p>
+                    <ul>
+                        <li>La confidentialité de votre compte Discord</li>
+                        <li>Toutes les activités effectuées depuis votre compte</li>
+                        <li>Notifier immédiatement toute utilisation non autorisée</li>
+                    </ul>
+
+                    <h2>4. Utilisation du Service</h2>
+                    <h3>4.1 Ce qui est autorisé</h3>
+                    <ul>
+                        <li>Utiliser Shellia AI pour votre activité e-commerce</li>
+                        <li>Générer du contenu pour vos propres besoins commerciaux</li>
+                        <li>Partager le contenu généré sur vos plateformes</li>
+                        <li>Utiliser l'API selon les limites de votre plan</li>
+                    </ul>
+
+                    <h3>4.2 Ce qui est interdit</h3>
+                    <p>Il est strictement interdit de :</p>
+                    <ul>
+                        <li>Utiliser le Service pour des activités illégales</li>
+                        <li>Générer du contenu discriminatoire, haineux ou violent</li>
+                        <li>Contourner les limites de quota (abus)</li>
+                        <li>Revendre l'accès au Service</li>
+                        <li>Extraire les données de la base de connaissances</li>
+                        <li>Attaquer ou perturber l'infrastructure</li>
+                        <li>Usurper l'identité d'autrui</li>
+                        <li>Distribuer du spam ou du contenu malveillant</li>
+                    </ul>
+
+                    <h2>5. Propriété intellectuelle</h2>
+                    <h3>5.1 Contenu généré</h3>
+                    <p>
+                        Vous conservez tous les droits sur le contenu que vous générez avec Shellia AI. Vous pouvez l'utiliser, le modifier et le distribuer librement pour vos besoins commerciaux.
+                    </p>
+
+                    <h3>5.2 Service</h3>
+                    <p>
+                        Shellia AI et tous ses éléments (logo, code, interface) sont la propriété exclusive de NEXTENDO. Toute reproduction ou utilisation non autorisée est interdite.
+                    </p>
+
+                    <h2>6. Tarification et paiement</h2>
+                    <h3>6.1 Gratuité initiale</h3>
+                    <p>
+                        Le plan Free est gratuit et vous offre 50 requêtes par jour. Aucune carte bancaire n'est requise pour l'utiliser.
+                    </p>
+
+                    <h3>6.2 Plans payants</h3>
+                    <p>Les plans Pro, Ultra et Founder sont payants et facturés :</p>
+                    <ul>
+                        <li>Par période mensuelle récurrente</li>
+                        <li>Via Stripe, notre prestataire de paiement</li>
+                        <li>En euros (EUR) TTC</li>
+                    </ul>
+
+                    <h3>6.3 Quotas à l'unité</h3>
+                    <p>
+                        Les quotas achetés sont valables à vie et non remboursables. Ils sont consommés après le quota quotidien gratuit.
+                    </p>
+
+                    <h3>6.4 Résiliation</h3>
+                    <p>
+                        Vous pouvez résilier votre abonnement à tout moment depuis votre dashboard. L'accès reste actif jusqu'à la fin de la période payée. Aucun remboursement n'est effectué pour les périodes partielles.
+                    </p>
+
+                    <h2>7. Limitation de responsabilité</h2>
+                    <p>Shellia AI est fourni "en l'état". Nous ne garantissons pas que :</p>
+                    <ul>
+                        <li>Le Service sera ininterrompu ou sans erreur</li>
+                        <li>Les résultats seront toujours pertinents ou exacts</li>
+                        <li>Le contenu généré sera adapté à votre usage spécifique</li>
+                    </ul>
+                    <p>
+                        En aucun cas, NEXTENDO ne pourra être tenu responsable des dommages indirects liés à l'utilisation du Service.
+                    </p>
+
+                    <h2>8. Suspension et résiliation</h2>
+                    <p>Nous nous réservons le droit de suspendre ou résilier votre compte en cas de :</p>
+                    <ul>
+                        <li>Violation des présentes CGU</li>
+                        <li>Comportement abusif envers la communauté</li>
+                        <li>Tentative de piratage ou d'attaque</li>
+                        <li>Non-paiement des sommes dues</li>
+                    </ul>
+
+                    <h2>9. Modifications</h2>
+                    <p>
+                        Nous pouvons modifier ces CGU à tout moment. Les modifications importantes vous seront notifiées 30 jours avant leur entrée en vigueur. Votre utilisation continue du Service après cette date constitue votre acceptation.
+                    </p>
+
+                    <h2>10. Droit applicable</h2>
+                    <p>
+                        Les présentes CGU sont régies par le droit français. Tout litige sera soumis aux tribunaux compétents de Paris.
+                    </p>
+
+                    <h2>11. Contact</h2>
+                    <p>Pour toute question concernant ces CGU :</p>
+                    <ul>
+                        <li>Email : <a href="mailto:contact@shellia.ai" class="text-brand-600 hover:underline">contact@shellia.ai</a></li>
+                        <li>Adresse : NEXTENDO, France</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-b from-white to-brand-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="font-display text-2xl font-bold text-center mb-8">Documents connexes</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <a href="privacy.html" class="glass-card rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i data-lucide="shield" class="w-8 h-8 text-brand-500 mx-auto mb-3"></i>
+                    <h3 class="font-semibold mb-1">Confidentialité</h3>
+                    <p class="text-sm text-gray-600">Politique de confidentialité</p>
+                </a>
+                <a href="cookies.html" class="glass-card rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i data-lucide="cookie" class="w-8 h-8 text-brand-500 mx-auto mb-3"></i>
+                    <h3 class="font-semibold mb-1">Cookies</h3>
+                    <p class="text-sm text-gray-600">Politique des cookies</p>
+                </a>
+                <a href="gdpr-rights.html" class="glass-card rounded-xl p-6 text-center hover:shadow-lg transition-shadow">
+                    <i data-lucide="shield-check" class="w-8 h-8 text-brand-500 mx-auto mb-3"></i>
+                    <h3 class="font-semibold mb-1">Droits RGPD</h3>
+                    <p class="text-sm text-gray-600">Exercer vos droits</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-brand-400 to-brand-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl text-white">Shellia AI</span>
+                    </div>
+                    <p class="text-sm">Propulsé par NEXTENDO</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Produit</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="features.html" class="hover:text-white transition-colors">Fonctionnalités</a></li>
+                        <li><a href="pricing.html" class="hover:text-white transition-colors">Tarifs</a></li>
+                        <li><a href="documentation.html" class="hover:text-white transition-colors">Documentation</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Ressources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="docs/QUICKSTART.md" class="hover:text-white transition-colors">Guide de démarrage</a></li>
+                        <li><a href="docs/API_DOCUMENTATION.md" class="hover:text-white transition-colors">API</a></li>
+                        <li><a href="community.html" class="hover:text-white transition-colors">Communauté</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Légal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="privacy.html" class="hover:text-white transition-colors">Confidentialité</a></li>
+                        <li><a href="terms.html" class="hover:text-white transition-colors">Conditions</a></li>
+                        <li><a href="cookies.html" class="hover:text-white transition-colors">Cookies</a></li>
+                        <li><a href="gdpr-rights.html" class="hover:text-white transition-colors">Droits RGPD</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm">© 2026 Shellia AI - NEXTENDO. Tous droits réservés.</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://github.com/nextendo" class="hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                    <a href="https://discord.gg/shellia" class="hover:text-white transition-colors"><i data-lucide="message-circle" class="w-5 h-5"></i></a>
+                    <a href="https://twitter.com/shelliaai" class="hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

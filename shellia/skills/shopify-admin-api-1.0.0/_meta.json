@@ -1,0 +1,27 @@
+{
+  "slug": "shellia-maxis-core",
+  "version": "2.1.0",
+  "name": "Shellia Core (Maxis Interface)",
+  "description": "Système d'exploitation de communauté Discord autonome avec isolation stricte des données utilisateurs (Shellia security).",
+  "author": "Nextendo",
+  "license": "Proprietary",
+  "publishedAt": 1770451200000,
+  "tags": ["discord", "community-os", "multi-tenant", "monetization"],
+  "requirements": {
+    "bins": ["curl", "jq", "openssl"],
+    "env":
+  },
+  "permissions": {
+    "network": [
+      "discord.com",
+      "api.stripe.com",
+      "*.supabase.co"
+    ],
+    "scopes_required": ["bot", "applications.commands", "identify"]
+  },
+  "safety_policy": {
+    "level": "critical",
+    "isolation_level": "strict_user_session",
+    "pii_handling": "redacted_logs"
+  }
+}

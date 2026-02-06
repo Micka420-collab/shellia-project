@@ -3,958 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fonctionnalités | Shellia AI</title>
-    <meta name="description" content="Découvrez toutes les fonctionnalités de Shellia AI: copywriting, analyse de marché, support client, génération d'images. Propulsé par NEXTENDO.">
+    <title>Fonctionnalités - Shellia AI</title>
+    <meta name="description" content="Découvrez toutes les fonctionnalités de Shellia AI - IA pour e-commerce, copywriting, support client, analyse de marché.">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                            950: '#451a03',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
-        :root {
-            --neon-pink: #3b82f6;
-            --neon-purple: #7c3aed;
-            --neon-cyan: #06b6d4;
-            --neon-blue: #2563eb;
-            --neon-orange: #3b82f6;
-            --neon-yellow: #06b6d4;
-            --dark: #0f172a;
-            --darker: #020617;
-            --glass: rgba(30, 41, 59, 0.6);
-            --glass-border: rgba(99, 102, 241, 0.15);
-            --text: #f8fafc;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #7c3aed 50%, #2563eb 100%);
-            --gradient-glow: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(124, 58, 237, 0.3));
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
         
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--darker);
-            color: var(--text);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        .gradient-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(124, 58, 237, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                var(--darker);
-        }
-
-        .gradient-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            z-index: -1;
-            animation: float 20s ease-in-out infinite;
-        }
-
-        .orb-1 {
-            width: 500px; height: 500px;
-            background: var(--gradient-glow);
-            top: 10%;
-            left: -200px;
-            opacity: 0.4;
-        }
-
-        .orb-2 {
-            width: 400px; height: 400px;
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(37, 99, 235, 0.4));
-            bottom: 10%;
-            right: -100px;
-            opacity: 0.35;
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(20px, -20px) scale(1.05); }
-        }
-
-        .noise {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            pointer-events: none;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 1000;
-            padding: 1.25rem 2rem;
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            padding: 0.75rem 2rem;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            text-decoration: none;
-            color: var(--text);
-        }
-
-        .logo-icon {
-            width: 42px; height: 42px;
-            background: var(--gradient-primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px; left: 0;
-            width: 0; height: 2px;
-            background: var(--gradient-primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover { color: var(--text); }
-        .nav-links a:hover::after { width: 100%; }
-
-        .nav-cta { display: flex; gap: 1rem; }
-
-        .btn {
-            padding: 0.875rem 1.75rem;
-            border-radius: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            font-size: 0.95rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .btn-glass {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            color: var(--text);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-glass:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: 0 4px 30px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 40px rgba(59, 130, 246, 0.5);
-        }
-
-        .btn-cyan {
-            background: linear-gradient(135deg, #06b6d4, #2563eb);
-            color: white;
-            box-shadow: 0 4px 30px rgba(6, 182, 212, 0.3);
-        }
-
-        /* Page Header */
-        .page-header {
-            padding: 10rem 2rem 4rem;
-            text-align: center;
-        }
-
-        .page-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.2rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            font-size: 0.875rem;
-            color: var(--neon-cyan);
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .page-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .gradient {
-            background: var(--gradient-primary);
+        .gradient-text {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .page-subtitle {
-            color: var(--text-muted);
-            font-size: 1.25rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Feature Tabs */
-        .feature-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            padding: 0 2rem 4rem;
-        }
-
-        .tab-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            color: var(--text-muted);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .tab-btn:hover, .tab-btn.active {
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            border-color: transparent;
-            color: white;
-        }
-
-        /* Feature Detail Cards */
+        
         .feature-showcase {
-            padding: 4rem 2rem 8rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .showcase-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            margin-bottom: 6rem;
-        }
-
-        .showcase-item:nth-child(even) {
-            direction: rtl;
-        }
-
-        .showcase-item:nth-child(even) > * {
-            direction: ltr;
-        }
-
-        .showcase-visual {
-            position: relative;
-        }
-
-        .visual-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
-            backdrop-filter: blur(20px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .visual-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        }
-
-        .visual-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .visual-icon {
-            width: 48px; height: 48px;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-        }
-
-        .visual-content {
-            background: rgba(0,0,0,0.2);
-            border-radius: 16px;
-            padding: 1.5rem;
-        }
-
-        .visual-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.875rem 0;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .visual-item:last-child { border-bottom: none; }
-
-        .check-icon {
-            width: 24px; height: 24px;
-            background: rgba(6, 182, 212, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #06b6d4;
-        }
-
-        .showcase-content h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .showcase-content > p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-
-        .feature-list {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .feature-list li {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.75rem 0;
-            color: var(--text-muted);
-        }
-
-        .feature-list li i {
-            color: #3b82f6;
-            width: 20px; height: 20px;
-        }
-
-        /* Capabilities Grid */
-        .capabilities {
-            padding: 6rem 2rem;
-            background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.03), transparent);
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .section-desc {
-            color: var(--text-muted);
-            font-size: 1.125rem;
-        }
-
-        .capabilities-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .capability-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(20px);
-        }
-
-        .capability-card:hover {
-            border-color: rgba(59, 130, 246, 0.3);
-            transform: translateY(-5px);
-        }
-
-        .capability-number {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            opacity: 0.3;
-            margin-bottom: 1rem;
-        }
-
-        .capability-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        .capability-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Integrations */
-        .integrations {
-            padding: 6rem 2rem;
-            text-align: center;
-        }
-
-        .integrations-grid {
-            max-width: 800px;
-            margin: 3rem auto 0;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-
-        .integration-item {
-            width: 80px; height: 80px;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             transition: all 0.3s ease;
         }
-
-        .integration-item:hover {
-            border-color: rgba(59, 130, 246, 0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        
+        .feature-showcase:hover {
+            transform: translateY(-4px);
         }
-
-        .integration-item i {
-            width: 32px; height: 32px;
-            color: var(--neon-cyan);
-        }
-
-        /* CTA */
-        .cta {
-            padding: 6rem 2rem;
-        }
-
-        .cta-box {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 32px;
-            padding: 4rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(20px);
-        }
-
-        .cta-box::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-box h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .cta-box p {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
-
-        /* Footer */
-        footer {
-            padding: 4rem 2rem 2rem;
-            border-top: 1px solid var(--glass-border);
-            background: rgba(15, 23, 42, 0.5);
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 4rem;
-            margin-bottom: 4rem;
-        }
-
-        .footer-brand .logo { margin-bottom: 1rem; }
-
-        .footer-desc {
-            color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-powered {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            font-size: 0.85rem;
-        }
-
-        .footer-powered strong {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .footer-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-        }
-
-        .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 0.875rem; }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-        }
-
-        .footer-links a:hover { color: #3b82f6; }
-
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 2rem;
-            border-top: 1px solid var(--glass-border);
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .footer-social a {
-            width: 44px; height: 44px;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            transition: all 0.3s ease;
-        }
-
-        .footer-social a:hover {
-            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             color: white;
-            border-color: transparent;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .showcase-item {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-            .showcase-item:nth-child(even) { direction: ltr; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .footer-bottom {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-            .cta-box { padding: 2rem; }
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
     </style>
 </head>
-<body>
-    <div class="gradient-bg"></div>
-    <div class="gradient-orb orb-1"></div>
-    <div class="gradient-orb orb-2"></div>
-    <div class="noise"></div>
-
+<body class="bg-gray-50 text-gray-900 font-sans">
     <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <div class="logo-icon">
-                    <i data-lucide="sparkles" style="width: 22px; height: 22px; color: white;"></i>
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-8">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-brand-400 to-brand-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl">Shellia AI</span>
+                    </a>
+                    <div class="hidden md:flex items-center gap-6">
+                        <a href="features.html" class="text-brand-600 font-medium">Fonctionnalités</a>
+                        <a href="pricing.html" class="text-gray-600 hover:text-brand-600 transition-colors">Tarifs</a>
+                        <a href="documentation.html" class="text-gray-600 hover:text-brand-600 transition-colors">Documentation</a>
+                        <a href="community.html" class="text-gray-600 hover:text-brand-600 transition-colors">Communauté</a>
+                    </div>
                 </div>
-                Shellia
-            </a>
-            <ul class="nav-links">
-                <li><a href="features.html">Fonctionnalités</a></li>
-                <li><a href="pricing.html">Tarifs</a></li>
-                <li><a href="community.html">Communauté</a></li>
-                <li><a href="about.html">À propos</a></li>
-            </ul>
-            <div class="nav-cta">
-                <a href="https://discord.gg/shellia" class="btn btn-glass" target="_blank">Discord</a>
-                <a href="pricing.html" class="btn btn-primary">Commencer</a>
+                <div class="flex items-center gap-4">
+                    <a href="/dashboard" class="hidden sm:block text-gray-600 hover:text-brand-600 transition-colors">Connexion</a>
+                    <a href="/invite" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg font-medium transition-all hover:shadow-lg hover:shadow-brand-500/30 flex items-center gap-2">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        Ajouter à Discord
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="page-tag fade-in">
-            <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
-            Propulsé par NEXTENDO
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 bg-gradient-to-br from-brand-50 via-white to-brand-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block text-brand-600 font-semibold mb-4">FONCTIONNALITÉS</span>
+            <h1 class="font-display text-5xl md:text-6xl font-bold mb-6">
+                Tout ce dont vous avez <span class="gradient-text">besoin</span>
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                Une suite complète d'outils IA conçue spécialement pour les e-commerçants. Automatisez, optimisez et faites croître votre business.
+            </p>
         </div>
-        <h1 class="page-title fade-in">
-            Fonctionnalités <span class="gradient">E-commerce</span>
-        </h1>
-        <p class="page-subtitle fade-in">
-            Des outils puissants pour automatiser ton business et maximiser tes conversions
-        </p>
     </section>
 
-    <!-- Feature Tabs -->
-    <div class="feature-tabs fade-in">
-        <button class="tab-btn active">Toutes</button>
-        <button class="tab-btn">Copywriting</button>
-        <button class="tab-btn">Analyse</button>
-        <button class="tab-btn">Support</button>
-        <button class="tab-btn">Design</button>
-    </div>
+    <!-- Feature Categories -->
+    <section class="py-8 bg-white border-b border-gray-200 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-2">
+                <button class="tab-btn active px-4 py-2 rounded-lg text-sm font-medium transition-all" onclick="showTab('all')">Tout</button>
+                <button class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all" onclick="showTab('copywriting')">Copywriting</button>
+                <button class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all" onclick="showTab('support')">Support</button>
+                <button class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all" onclick="showTab('analytics')">Analytics</button>
+                <button class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-all" onclick="showTab('management')">Gestion</button>
+            </div>
+        </div>
+    </section>
 
-    <!-- Feature Showcase -->
-    <section class="feature-showcase">
-        <!-- Copywriting -->
-        <div class="showcase-item fade-in">
-            <div class="showcase-visual">
-                <div class="visual-card">
-                    <div class="visual-header">
-                        <div class="visual-icon">
-                            <i data-lucide="pen-tool" style="width: 24px; height: 24px; color: white;"></i>
+    <!-- Features Grid -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12">
+                
+                <!-- Feature 1: Copywriting -->
+                <div class="feature-showcase glass-card rounded-2xl p-8" data-category="copywriting">
+                    <div class="flex items-start gap-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="pen-tool" class="w-7 h-7 text-white"></i>
                         </div>
-                        <span style="font-weight: 600;">Copywriting IA</span>
-                    </div>
-                    <div class="visual-content">
-                        <div class="visual-item">
-                            <div class="check-icon"><i data-lucide="check" style="width: 14px; height: 14px;"></i></div>
-                            <span>Fiche produit SEO optimisée</span>
-                        </div>
-                        <div class="visual-item">
-                            <div class="check-icon"><i data-lucide="check" style="width: 14px; height: 14px;"></i></div>
-                            <span>Email de panier abandonné</span>
-                        </div>
-                        <div class="visual-item">
-                            <div class="check-icon"><i data-lucide="check" style="width: 14px; height: 14px;"></i></div>
-                            <span>Script publicitaire Facebook</span>
-                        </div>
-                        <div class="visual-item">
-                            <div class="check-icon"><i data-lucide="check" style="width: 14px; height: 14px;"></i></div>
-                            <span>Description Etsy/Amazon</span>
+                        <div class="flex-1">
+                            <h3 class="font-display text-2xl font-bold mb-3">Copywriting IA</h3>
+                            <p class="text-gray-600 mb-4">Générez des contenus professionnels en quelques secondes. Des descriptions de produits convaincantes aux emails marketing percutants.</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Descriptions de produits optimisées SEO</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Emails marketing personnalisés</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Posts réseaux sociaux engageants</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Pages de vente et landing pages</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="showcase-content">
-                <h3>Copywriting qui <span class="gradient">convertit</span></h3>
-                <p>
-                    Fini le syndrome de la page blanche. Shellia génère des textes persuasifs 
-                    adaptés à ton audience et optimisés pour les conversions.
-                </p>
-                <ul class="feature-list">
-                    <li><i data-lucide="check-circle"></i> Templates pré-optimisés pour chaque canal</li>
-                    <li><i data-lucide="check-circle"></i> A/B testing automatique</li>
-                    <li><i data-lucide="check-circle"></i> Optimisation SEO intégrée</li>
-                    <li><i data-lucide="check-circle"></i> Ton de voix personnalisable</li>
-                </ul>
-                <a href="pricing.html" class="btn btn-primary">
-                    Essayer le copywriting
-                    <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-                </a>
-            </div>
-        </div>
 
-        <!-- Market Analysis -->
-        <div class="showcase-item fade-in">
-            <div class="showcase-visual">
-                <div class="visual-card">
-                    <div class="visual-header">
-                        <div class="visual-icon" style="background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));">
-                            <i data-lucide="bar-chart-3" style="width: 24px; height: 24px; color: white;"></i>
+                <!-- Feature 2: Support Client -->
+                <div class="feature-showcase glass-card rounded-2xl p-8" data-category="support">
+                    <div class="flex items-start gap-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="headphones" class="w-7 h-7 text-white"></i>
                         </div>
-                        <span style="font-weight: 600;">Analyse de Marché</span>
-                    </div>
-                    <div class="visual-content">
-                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="flex: 1; background: rgba(0, 245, 255, 0.1); border-radius: 12px; padding: 1rem; text-align: center;">
-                                <div style="font-family: 'Space Grotesk'; font-size: 1.5rem; font-weight: 700; color: var(--neon-cyan);">+156%</div>
-                                <div style="font-size: 0.75rem; color: var(--text-muted);">Croissance</div>
-                            </div>
-                            <div style="flex: 1; background: rgba(255, 0, 110, 0.1); border-radius: 12px; padding: 1rem; text-align: center;">
-                                <div style="font-family: 'Space Grotesk'; font-size: 1.5rem; font-weight: 700; color: #3b82f6;">€89k</div>
-                                <div style="font-size: 0.75rem; color: var(--text-muted);">Potentiel</div>
-                            </div>
-                        </div>
-                        <div class="visual-item">
-                            <div class="check-icon"><i data-lucide="check" style="width: 14px; height: 14px;"></i></div>
-                            <span>Tendance: Produits éco-friendly ↑</span>
-                        </div>
-                        <div class="visual-item">
-                            <div class="check-icon"><i data-lucide="check" style="width: 14px; height: 14px;"></i></div>
-                            <span>5 concurrents analysés</span>
+                        <div class="flex-1">
+                            <h3 class="font-display text-2xl font-bold mb-3">Support Client Automatisé</h3>
+                            <p class="text-gray-600 mb-4">Répondez à vos clients instantanément avec des suggestions intelligentes et personnalisées. Réduisez votre temps de réponse de 80%.</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Réponses instantanées 24/7</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Personnalisation selon l'historique</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Multilingue (FR, EN, ES, DE)</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Transfert intelligent vers humain</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="showcase-content">
-                <h3>Trouve les produits <span class="gradient">gagnants</span></h3>
-                <p>
-                    Shellia analyse le marché en temps réel, identifie les tendances émergentes 
-                    et évalue la concurrence pour te donner un avantage.
-                </p>
-                <ul class="feature-list">
-                    <li><i data-lucide="check-circle"></i> Scan de produits tendance</li>
-                    <li><i data-lucide="check-circle"></i> Analyse des prix concurrents</li>
-                    <li><i data-lucide="check-circle"></i> Prédiction des saisons</li>
-                    <li><i data-lucide="check-circle"></i> Alertes opportunités</li>
-                </ul>
-                <a href="pricing.html" class="btn btn-cyan">
-                    Voir l'analyse
-                    <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-                </a>
-            </div>
-        </div>
 
-        <!-- Support -->
-        <div class="showcase-item fade-in">
-            <div class="showcase-visual">
-                <div class="visual-card">
-                    <div class="visual-header">
-                        <div class="visual-icon" style="background: linear-gradient(135deg, var(--neon-orange), var(--neon-yellow));">
-                            <i data-lucide="headphones" style="width: 24px; height: 24px; color: white;"></i>
+                <!-- Feature 3: Analytics -->
+                <div class="feature-showcase glass-card rounded-2xl p-8" data-category="analytics">
+                    <div class="flex items-start gap-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="bar-chart-3" class="w-7 h-7 text-white"></i>
                         </div>
-                        <span style="font-weight: 600;">Support Client 24/7</span>
-                    </div>
-                    <div class="visual-content">
-                        <div style="background: rgba(0, 245, 255, 0.1); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; border-left: 3px solid var(--neon-cyan);">
-                            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Client: Commande #12345 ?</div>
-                            <div style="font-size: 0.9rem;">Shellia: Livraison demain ! 📦</div>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted);">
-                            <span>Réponse: <strong style="color: var(--neon-cyan);">3s</strong></span>
-                            <span>Satisfaction: <strong style="color: #10b981;">98%</strong></span>
+                        <div class="flex-1">
+                            <h3 class="font-display text-2xl font-bold mb-3">Analyse de Marché</h3>
+                            <p class="text-gray-600 mb-4">Obtenez des insights précieux sur votre marché, vos concurrents et les tendances. Prenez des décisions basées sur les données.</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Analyse des concurrents</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Identification des tendances</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Pricing intelligence</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Rapports hebdomadaires automatiques</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="showcase-content">
-                <h3>Support <span class="gradient">24/7</span> automatisé</h3>
-                <p>
-                    Tes clients ont des questions à 3h du matin ? Shellia y répond instantanément 
-                    pendant que tu dors.
-                </p>
-                <ul class="feature-list">
-                    <li><i data-lucide="check-circle"></i> Réponses instantanées 24h/24</li>
-                    <li><i data-lucide="check-circle"></i> Intégration helpdesk</li>
-                    <li><i data-lucide="check-circle"></i> Escalade intelligente</li>
-                    <li><i data-lucide="check-circle"></i> Base de connaissances auto</li>
-                </ul>
-                <a href="pricing.html" class="btn btn-primary">
-                    Automatiser
-                    <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-                </a>
+
+                <!-- Feature 4: Quota System -->
+                <div class="feature-showcase glass-card rounded-2xl p-8" data-category="management">
+                    <div class="flex items-start gap-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="coins" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-display text-2xl font-bold mb-3">Système de Quotas Flexible</h3>
+                            <p class="text-gray-600 mb-4">Achetez des quotas qui n'expirent jamais. Utilisez- quand vous voulez, sans abonnement forcé.</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Quotas quotidiens gratuits (50/jour)</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Quotas achetés valables à vie</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>6 packs adaptés à vos besoins</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Paiement sécurisé via Stripe</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 5: Discord Integration -->
+                <div class="feature-showcase glass-card rounded-2xl p-8" data-category="management">
+                    <div class="flex items-start gap-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="message-circle" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-display text-2xl font-bold mb-3">Intégration Discord Complète</h3>
+                            <p class="text-gray-600 mb-4">Utilisez Shellia directement dans Discord. Commandes slash, mentions, et dashboard web synchronisé.</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Commandes slash (/ask, /quota, /help)</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Mention @Shellia pour chatter</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Dashboard web synchronisé</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Notifications et alertes</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 6: Security -->
+                <div class="feature-showcase glass-card rounded-2xl p-8" data-category="management">
+                    <div class="flex items-start gap-6">
+                        <div class="w-14 h-14 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="shield-check" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-display text-2xl font-bold mb-3">Sécurité & Confidentialité</h3>
+                            <p class="text-gray-600 mb-4">Vos données sont chiffrées et stockées en Europe. Conformité totale au RGPD, sans compromis.</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Chiffrement AES-256-GCM</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Serveurs en France & Allemagne</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Authentification Discord OAuth2</span>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Suppression auto après 30j d'inactivité</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Capabilities -->
-    <section class="capabilities">
-        <div class="section-header fade-in">
-            <div class="page-tag">Capacités</div>
-            <h2 class="section-title">
-                Encore plus de <span class="gradient">super-pouvoirs</span>
-            </h2>
-        </div>
-        <div class="capabilities-grid">
-            <div class="capability-card fade-in">
-                <div class="capability-number">01</div>
-                <h3 class="capability-title">SEO Automatique</h3>
-                <p class="capability-desc">Optimisation automatique des titres, meta descriptions et structure des URLs.</p>
+    <!-- Advanced Features -->
+    <section class="py-20 bg-gradient-to-b from-white to-brand-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="inline-block text-brand-600 font-semibold mb-2">FONCTIONNALITÉS AVANCÉES</span>
+                <h2 class="font-display text-4xl font-bold mb-4">Pour les utilisateurs Pro et Ultra</h2>
+                <p class="text-gray-600 text-lg">Des outils puissants pour les e-commerçants qui veulent aller plus loin.</p>
             </div>
-            <div class="capability-card fade-in">
-                <div class="capability-number">02</div>
-                <h3 class="capability-title">Traduction Multi-langue</h3>
-                <p class="capability-desc">Traduis ton store en 20+ langues pour exporter à l'international.</p>
-            </div>
-            <div class="capability-card fade-in">
-                <div class="capability-number">03</div>
-                <h3 class="capability-title">Gestion des Avis</h3>
-                <p class="capability-desc">Génération et gestion des avis clients, réponses automatiques.</p>
-            </div>
-            <div class="capability-card fade-in">
-                <div class="capability-number">04</div>
-                <h3 class="capability-title">Stratégie de Prix</h3>
-                <p class="capability-desc">Pricing dynamique basé sur la concurrence et la demande.</p>
-            </div>
-            <div class="capability-card fade-in">
-                <div class="capability-number">05</div>
-                <h3 class="capability-title">Prévision de Stock</h3>
-                <p class="capability-desc">Algorithmes prédictifs pour anticiper tes besoins en stock.</p>
-            </div>
-            <div class="capability-card fade-in">
-                <div class="capability-number">06</div>
-                <h3 class="capability-title">Email Marketing</h3>
-                <p class="capability-desc">Séquences email automatisées: welcome, abandoned cart, win-back...</p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-400 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="webhook" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">API & Webhooks</h3>
+                    <p class="text-gray-600 text-sm">Intégrez Shellia dans vos applications avec notre API complète et des webhooks temps réel.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-400 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="users" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Programme d'Affiliation</h3>
+                    <p class="text-gray-600 text-sm">Gagnez jusqu'à 35% de commission sur chaque filleul. 5 niveaux : Bronze, Silver, Gold, Platinum, Diamond.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-400 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="ticket" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Système de Tickets</h3>
+                    <p class="text-gray-600 text-sm">Gérez votre support client avec un système de tickets complet, accessible via Discord et le web.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-400 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="gift" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Giveaways Automatiques</h3>
+                    <p class="text-gray-600 text-sm">Giveaways aux paliers de 50, 100, 250 membres. Grade "Winner" avec accès Pro 3 jours.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-400 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="lock" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Server Lock</h3>
+                    <p class="text-gray-600 text-sm">Verrouillez votre serveur en cas de raid : invitations révoquées, nouveaux membres kickés automatiquement.</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-brand-400 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="file-text" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Rapports Hebdomadaires</h3>
+                    <p class="text-gray-600 text-sm">Recevez chaque lundi un récapitulatif automatique avec analyse IA de votre activité.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Integrations -->
-    <section class="integrations">
-        <div class="section-header fade-in">
-            <div class="page-tag">Intégrations</div>
-            <h2 class="section-title">
-                Connecte tes <span class="gradient">outils</span>
-            </h2>
-        </div>
-        <div class="integrations-grid fade-in">
-            <div class="integration-item"><i data-lucide="shopping-bag"></i></div>
-            <div class="integration-item"><i data-lucide="credit-card"></i></div>
-            <div class="integration-item"><i data-lucide="truck"></i></div>
-            <div class="integration-item"><i data-lucide="mail"></i></div>
-            <div class="integration-item"><i data-lucide="bar-chart"></i></div>
-            <div class="integration-item"><i data-lucide="smartphone"></i></div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta">
-        <div class="cta-box fade-in">
-            <div class="cta-content">
-                <h2>Prêt à tout automatiser ?</h2>
-                <p>Rejoins les 5000+ e-commerçants qui utilisent Shellia pour développer leur business.</p>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="pricing.html" class="btn btn-primary btn-large">
-                        Essayer gratuitement
-                    </a>
-                    <a href="https://discord.gg/shellia" class="btn btn-cyan btn-large" target="_blank">
-                        Rejoindre Discord
+    <!-- CTA Section -->
+    <section class="py-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-3xl p-12 text-center relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-brand-400/20 to-brand-600/20"></div>
+                <div class="relative z-10">
+                    <h2 class="font-display text-4xl font-bold mb-4">Prêt à essayer ?</h2>
+                    <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">Commencez gratuitement avec 50 requêtes par jour. Aucune carte bancaire requise.</p>
+                    <a href="/invite" class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-xl font-semibold transition-all hover:shadow-xl hover:shadow-brand-500/30">
+                        <i data-lucide="rocket" class="w-5 h-5"></i>
+                        Commencer gratuitement
                     </a>
                 </div>
             </div>
@@ -962,54 +403,56 @@
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo">
-                        <div class="logo-icon">
-                            <i data-lucide="sparkles" style="width: 22px; height: 22px; color: white;"></i>
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-br from-brand-400 to-brand-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="bot" class="w-5 h-5 text-white"></i>
                         </div>
-                        Shellia
-                    </a>
-                    <p class="footer-desc">L'assistant IA qui révolutionne l'e-commerce. Développé par des e-commerçants, pour des e-commerçants.</p>
-                    <div class="footer-powered">
-                        <span>Propulsé par</span>
-                        <strong>NEXTENDO</strong>
+                        <span class="font-display font-bold text-xl text-white">Shellia AI</span>
                     </div>
+                    <p class="text-sm">Propulsé par NEXTENDO</p>
                 </div>
                 <div>
-                    <h4 class="footer-title">Produit</h4>
-                    <ul class="footer-links">
-                        <li><a href="features.html">Fonctionnalités</a></li>
-                        <li><a href="pricing.html">Tarifs</a></li>
-                        <li><a href="integrations.html">Intégrations</a></li>
-                        <li><a href="roadmap.html">Roadmap</a></li>
+                    <h4 class="text-white font-semibold mb-4">Produit</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="features.html" class="hover:text-white transition-colors">Fonctionnalités</a></li>
+                        <li><a href="pricing.html" class="hover:text-white transition-colors">Tarifs</a></li>
+                        <li><a href="documentation.html" class="hover:text-white transition-colors">Documentation</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="footer-title">Ressources</h4>
-                    <ul class="footer-links">
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="guides.html">Guides</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
+                    <h4 class="text-white font-semibold mb-4">Ressources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="docs/QUICKSTART.md" class="hover:text-white transition-colors">Guide de démarrage</a></li>
+                        <li><a href="docs/API_DOCUMENTATION.md" class="hover:text-white transition-colors">API</a></li>
+                        <li><a href="community.html" class="hover:text-white transition-colors">Communauté</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="footer-title">Entreprise</h4>
-                    <ul class="footer-links">
-                        <li><a href="about.html">À propos</a></li>
-                        <li><a href="community.html">Communauté</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                    <h4 class="text-white font-semibold mb-4">Légal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="privacy.html" class="hover:text-white transition-colors">Confidentialité</a></li>
+                        <li><a href="terms.html" class="hover:text-white transition-colors">Conditions</a></li>
+                        <li><a href="cookies.html" class="hover:text-white transition-colors">Cookies</a></li>
+                        <li><a href="gdpr-rights.html" class="hover:text-white transition-colors">Droits RGPD</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Shellia by NEXTENDO. Tous droits réservés.</p>
-                <div class="footer-social">
-                    <a href="#"><i data-lucide="twitter" style="width: 20px; height: 20px;"></i></a>
-                    <a href="#"><i data-lucide="linkedin" style="width: 20px; height: 20px;"></i></a>
-                    <a href="https://discord.gg/shellia"><i data-lucide="message-circle" style="width: 20px; height: 20px;"></i></a>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm">© 2026 Shellia AI - NEXTENDO. Tous droits réservés.</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://github.com/nextendo" class="hover:text-white transition-colors">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://discord.gg/shellia" class="hover:text-white transition-colors">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://twitter.com/shelliaai" class="hover:text-white transition-colors">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1018,26 +461,24 @@
     <script>
         lucide.createIcons();
 
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) navbar.classList.add('scrolled');
-            else navbar.classList.remove('scrolled');
-        });
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+        function showTab(category) {
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(category) || (category === 'all' && btn.textContent === 'Tout')) {
+                    btn.classList.add('active');
+                }
             });
-        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
+            // Show/hide features
+            document.querySelectorAll('.feature-showcase').forEach(feature => {
+                if (category === 'all' || feature.dataset.category === category) {
+                    feature.style.display = 'block';
+                } else {
+                    feature.style.display = 'none';
+                }
             });
-        });
+        }
     </script>
 </body>
 </html>

@@ -1,0 +1,41 @@
+{
+  "id": "ticketing",
+  "name": "Gestion des Tickets Support",
+  "version": "1.0.0",
+  "icon": "🎫",
+  "priority": "high",
+  "category": "support",
+  "description": "Système complet de tickets support avec isolation stricte utilisateur via RLS",
+  "endpoints": {
+    "base": "/api/tickets",
+    "methods": ["GET", "POST", "PATCH", "DELETE"],
+    "authentication": "Bearer Token + Discord OAuth"
+  },
+  "features": [
+    "Création de tickets avec catégories",
+    "SLA automatique (Critical: 12h, High: 24h, Medium: 48h, Low: 72h)",
+    "Notes internes (visibles uniquement par admins)",
+    "Isolation utilisateur (Privacy by Design)",
+    "Dashboard web de gestion"
+  ],
+  "categories": [
+    {"id": "general", "name": "Général", "sla": "72h"},
+    {"id": "billing", "name": "Facturation", "sla": "24h"},
+    {"id": "technical", "name": "Technique", "sla": "48h"},
+    {"id": "bug_report", "name": "Bug", "sla": "48h"},
+    {"id": "account", "name": "Compte", "sla": "24h"},
+    {"id": "suggestion", "name": "Suggestion", "sla": "72h"}
+  ],
+  "database_tables": ["tickets", "ticket_messages", "ticket_attachments"],
+  "commands": [
+    "!ticket_create",
+    "!ticket_list",
+    "!ticket_view",
+    "!ticket_reply",
+    "!ticket_close",
+    "!ticket_stats"
+  ],
+  "dependencies": [],
+  "author": "Shellia AI",
+  "status": "production"
+}

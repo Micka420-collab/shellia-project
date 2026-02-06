@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentification - Shellia AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #12121a 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .callback-container {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(59, 130, 246, 0.2);
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 2rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+        
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 400px;
+        }
+        
+        .error-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .success-check {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #10b981, #3b82f6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 2rem;
+            animation: scaleIn 0.3s ease;
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="callback-container">
+        <div id="loading">
+            <div class="spinner"></div>
+            <h1>Connexion en cours...</h1>
+            <p>Veuillez patienter pendant que nous vous connectons.</p>
+        </div>
+        
+        <div id="error" class="error" style="display: none;">
+            <div class="error-icon">❌</div>
+            <h1>Erreur de connexion</h1>
+            <p id="error-message">Une erreur est survenue.</p>
+            <a href="/login.html" class="btn">Réessayer</a>
+        </div>
+        
+        <div id="success" style="display: none;">
+            <div class="success-check">✓</div>
+            <h1>Connecté !</h1>
+            <p>Redirection en cours...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://votre-projet.supabase.co';
+        const SUPABASE_ANON_KEY = 'votre-clé-anon-publique';
+        
+        async function handleCallback() {
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const successEl = document.getElementById('success');
+            const errorMsgEl = document.getElementById('error-message');
+            
+            try {
+                const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                
+                // Supabase gère automatiquement le callback OAuth
+                const { data: { session }, error } = await supabaseClient.auth.getSession();
+                
+                if (error) {
+                    throw error;
+                }
+                
+                if (session) {
+                    // Succès
+                    loadingEl.style.display = 'none';
+                    successEl.style.display = 'block';
+                    
+                    // Récupérer la page de redirection
+                    const redirectTo = sessionStorage.getItem('redirectAfterLogin') || '/user-dashboard.html';
+                    sessionStorage.removeItem('redirectAfterLogin');
+                    
+                    // Redirection après un court délai
+                    setTimeout(() => {
+                        window.location.href = redirectTo;
+                    }, 1000);
+                    
+                } else {
+                    // Pas de session, rediriger vers login
+                    window.location.href = '/login.html';
+                }
+                
+            } catch (err) {
+                console.error('Erreur auth:', err);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                errorMsgEl.textContent = err.message || 'Une erreur est survenue lors de la connexion.';
+            }
+        }
+        
+        // Exécuter au chargement
+        handleCallback();
+    </script>
+</body>
+</html>

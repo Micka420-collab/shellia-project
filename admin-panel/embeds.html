@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📦 Embeds & Humbles - Maxis Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .embeds-container {
+            padding: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        .builder-layout {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 1200px) {
+            .builder-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Editor Section */
+        .editor-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px 15px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        input[type="color"] {
+            width: 50px;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        /* Preview Section */
+        .preview-section {
+            position: sticky;
+            top: 20px;
+        }
+        
+        .preview-box {
+            background: #36393f;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .preview-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Discord Embed Preview */
+        .discord-embed {
+            background: #2f3136;
+            border-radius: 4px;
+            border-left: 4px solid #5865F2;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+        }
+        
+        .discord-embed-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .discord-embed-author-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #5865F2;
+        }
+        
+        .discord-embed-author {
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .discord-embed-title {
+            color: #00b0f4;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .discord-embed-description {
+            color: #dcddde;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .discord-embed-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .discord-embed-thumbnail {
+            float: right;
+            width: 80px;
+            height: 80px;
+            border-radius: 4px;
+            margin-left: 10px;
+            background: #40444b;
+        }
+        
+        .discord-embed-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .discord-embed-field {
+            min-width: 0;
+        }
+        
+        .discord-embed-field-name {
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .discord-embed-field-value {
+            color: #dcddde;
+            font-size: 0.85rem;
+        }
+        
+        .discord-embed-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .discord-embed-footer-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #5865F2;
+        }
+        
+        .discord-embed-footer-text {
+            color: #72767d;
+            font-size: 0.75rem;
+        }
+        
+        .discord-embed-timestamp {
+            color: #72767d;
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+        
+        /* Discord Buttons Preview */
+        .discord-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .discord-btn {
+            padding: 8px 16px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .discord-btn.primary { background: #5865F2; color: white; }
+        .discord-btn.secondary { background: #4f545c; color: white; }
+        .discord-btn.success { background: #3ba55d; color: white; }
+        .discord-btn.danger { background: #ed4245; color: white; }
+        .discord-btn.premium { 
+            background: linear-gradient(90deg, #fee75c, #ebc442); 
+            color: #1a1a2e;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Button Builder */
+        .button-builder {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .button-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+        
+        /* Templates Grid */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .template-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .template-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .template-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .template-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        /* Embeds List */
+        .embeds-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .embed-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .embed-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+        
+        .embed-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+        
+        .embed-meta {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .embed-preview-mini {
+            background: #2f3136;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 0.8rem;
+            max-height: 150px;
+            overflow: hidden;
+        }
+        
+        .embed-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        /* Payment Integration */
+        .payment-options {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .payment-options h4 {
+            color: #10b981;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Action Buttons */
+        .action-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* Channel Selector */
+        .channel-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        
+        .channel-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .channel-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .channel-item.selected {
+            background: rgba(59, 130, 246, 0.3);
+            border: 1px solid #3b82f6;
+        }
+        
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Analytics Cards */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .analytics-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .analytics-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        
+        .analytics-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 5px;
+        }
+        
+        /* Field Builder */
+        .field-builder {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .field-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-logo">📦</span>
+            <span>Embeds & Humbles</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">📊 Dashboard</a>
+            <a href="users.html">👥 Utilisateurs</a>
+            <a href="orders.html">🛍️ Commandes</a>
+            <a href="tickets.html">🎫 Tickets</a>
+            <a href="buttons.html">🔘 Boutons</a>
+            <a href="embeds.html" class="active">📦 Embeds</a>
+            <a href="affiliates.html">🤝 Affiliation</a>
+            <a href="logs.html">📜 Logs</a>
+        </div>
+        <div class="nav-user">
+            <span id="admin-name">Admin</span>
+            <button class="btn-logout" onclick="logout()">Déconnexion</button>
+        </div>
+    </nav>
+
+    <div class="embeds-container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1 class="page-title">📦 Embed Builder (Style MEE6)</h1>
+            <p class="page-subtitle">Créez des messages riches avec boutons de paiement intégrés</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('builder')">🛠️ Créer un Embed</div>
+            <div class="tab" onclick="switchTab('templates')">📋 Templates</div>
+            <div class="tab" onclick="switchTab('list')">📦 Mes Embeds</div>
+            <div class="tab" onclick="switchTab('analytics')">📊 Analytics</div>
+        </div>
+
+        <!-- Tab: Builder -->
+        <div id="builder-tab" class="tab-content active">
+            <div class="builder-layout">
+                <!-- Editor -->
+                <div class="editor-section">
+                    <h2 class="section-title">🎨 Configuration</h2>
+                    
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Nom de l'Embed (usage interne)</label>
+                            <input type="text" class="form-control" id="embed-name" placeholder="Ex: Promo Janvier 2024">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Channel Discord</label>
+                            <select class="form-control" id="embed-channel">
+                                <option value="">Sélectionner un channel...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Couleur de l'embed</label>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="embed-color" value="#5865F2">
+                                <span id="color-value">#5865F2</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Timestamp</label>
+                            <select class="form-control" id="embed-timestamp">
+                                <option value="none">Aucun</option>
+                                <option value="current">Date actuelle</option>
+                                <option value="custom">Personnalisé</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Auteur</label>
+                            <input type="text" class="form-control" id="embed-author" placeholder="Nom de l'auteur">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>URL Icon Auteur</label>
+                            <input type="text" class="form-control" id="embed-author-icon" placeholder="https://...">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Titre</label>
+                            <input type="text" class="form-control" id="embed-title" placeholder="Titre de l'embed">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>URL du Titre (optionnel)</label>
+                            <input type="text" class="form-control" id="embed-url" placeholder="https://...">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Description</label>
+                            <textarea class="form-control" id="embed-description" placeholder="Description de l'embed...
+Supporte le **markdown**
+Et les \`code blocks\`
+
+- Listes
+- À puces"></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Image (URL)</label>
+                            <input type="text" class="form-control" id="embed-image" placeholder="https://...">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Thumbnail (URL)</label>
+                            <input type="text" class="form-control" id="embed-thumbnail" placeholder="https://...">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Footer</label>
+                            <input type="text" class="form-control" id="embed-footer" placeholder="Texte du footer">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Icon Footer</label>
+                            <input type="text" class="form-control" id="embed-footer-icon" placeholder="https://...">
+                        </div>
+                    </div>
+
+                    <!-- Fields Builder -->
+                    <h3 style="margin-top: 25px; margin-bottom: 15px;">📝 Fields</h3>
+                    <div id="fields-container">
+                        <!-- Fields will be added here -->
+                    </div>
+                    <button class="btn-secondary btn-small" onclick="addField()" style="margin-top: 10px;">
+                        + Ajouter un Field
+                    </button>
+
+                    <!-- Buttons Builder -->
+                    <h3 style="margin-top: 25px; margin-bottom: 15px;">🔘 Boutons</h3>
+                    <div id="buttons-container">
+                        <!-- Buttons will be added here -->
+                    </div>
+                    <button class="btn-secondary btn-small" onclick="addButton()" style="margin-top: 10px;">
+                        + Ajouter un Bouton
+                    </button>
+
+                    <!-- Payment Integration -->
+                    <div class="payment-options">
+                        <h4>💳 Intégration Paiement Stripe</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Produit Stripe ID</label>
+                                <input type="text" class="form-control" id="stripe-product" placeholder="price_xxx...">
+                            </div>
+                            <div class="form-group">
+                                <label>Prix affiché</label>
+                                <input type="text" class="form-control" id="display-price" placeholder="€9.99">
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="checkbox-wrapper">
+                                    <input type="checkbox" id="payment-enabled">
+                                    <span>Activer le paiement direct sur ce bouton</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="action-bar">
+                        <button class="btn-primary" onclick="sendEmbed()">🚀 Envoyer sur Discord</button>
+                        <button class="btn-secondary" onclick="saveDraft()">💾 Sauvegarder Brouillon</button>
+                        <button class="btn-secondary" onclick="scheduleEmbed()">⏰ Programmer</button>
+                        <button class="btn-secondary" onclick="resetForm()">🔄 Réinitialiser</button>
+                    </div>
+                </div>
+
+                <!-- Preview -->
+                <div class="preview-section">
+                    <div class="preview-box">
+                        <div class="preview-label">Preview Discord</div>
+                        
+                        <!-- Discord Message Preview -->
+                        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: #5865F2; display: flex; align-items: center; justify-content: center;">
+                                🤖
+                            </div>
+                            <div>
+                                <div style="font-weight: 600; color: #fff;">Shellia Bot</div>
+                                <div style="font-size: 0.75rem; color: #72767d;">Aujourd'hui à 14:30</div>
+                            </div>
+                        </div>
+
+                        <!-- The Embed -->
+                        <div class="discord-embed" id="discord-embed-preview" style="border-left-color: #5865F2;">
+                            <div class="discord-embed-header">
+                                <div class="discord-embed-author-icon"></div>
+                                <div class="discord-embed-author" id="preview-author"></div>
+                            </div>
+                            
+                            <img src="" class="discord-embed-thumbnail" id="preview-thumbnail" style="display: none;">
+                            
+                            <div class="discord-embed-title" id="preview-title"></div>
+                            <div class="discord-embed-description" id="preview-description"></div>
+                            
+                            <img src="" class="discord-embed-image" id="preview-image" style="display: none;">
+                            
+                            <div class="discord-embed-fields" id="preview-fields"></div>
+                            
+                            <div class="discord-embed-footer">
+                                <div class="discord-embed-footer-icon"></div>
+                                <div class="discord-embed-footer-text" id="preview-footer"></div>
+                                <div class="discord-embed-timestamp" id="preview-timestamp"></div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="discord-buttons" id="preview-buttons"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Templates -->
+        <div id="templates-tab" class="tab-content">
+            <h2 class="section-title">📋 Templates Prédéfinis</h2>
+            <div class="templates-grid" id="templates-grid">
+                <!-- Templates loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Tab: List -->
+        <div id="list-tab" class="tab-content">
+            <h2 class="section-title">📦 Mes Embeds</h2>
+            <div class="embeds-list" id="embeds-list">
+                <!-- Embeds loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- Tab: Analytics -->
+        <div id="analytics-tab" class="tab-content">
+            <h2 class="section-title">📊 Performance des Embeds</h2>
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <div class="analytics-value" id="stat-total-embeds">0</div>
+                    <div class="analytics-label">Embeds Créés</div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-value" id="stat-total-views">0</div>
+                    <div class="analytics-label">Vues Totales</div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-value" id="stat-total-clicks">0</div>
+                    <div class="analytics-label">Clicks Boutons</div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-value" id="stat-conversion">0%</div>
+                    <div class="analytics-label">Conversion</div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-value" id="stat-revenue">€0</div>
+                    <div class="analytics-label">Revenue Généré</div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-value" id="stat-active-embeds">0</div>
+                    <div class="analytics-label">Embeds Actifs</div>
+                </div>
+            </div>
+
+            <div class="embeds-list" id="analytics-embeds-list">
+                <!-- Detailed analytics per embed -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let currentTab = 'builder';
+        let fields = [];
+        let buttons = [];
+        let channels = [];
+        let embeds = [];
+
+        // Templates
+        const templates = {
+            welcome: {
+                name: "👋 Message de Bienvenue",
+                icon: "👋",
+                config: {
+                    color: "#10b981",
+                    title: "Bienvenue sur {server_name} !",
+                    description: "Nous sommes ravis de t'accueillir !\n\n🎁 **Pour commencer:**\n• Lis les règles dans <#rules>\n• Présente-toi dans <#intro>\n• Découvre nos offres ci-dessous",
+                    footer: "Bon séjour parmi nous !"
+                }
+            },
+            promo: {
+                name: "🏷️ Promotion/Offre",
+                icon: "🏷️",
+                config: {
+                    color: "#f59e0b",
+                    title: "🎉 Offre Spéciale -30% !",
+                    description: "**Profitez de notre offre exclusive !**\n\n✨ Plan Pro avec **30% de réduction**\n⏰ Offre limitée dans le temps\n💳 Paiement sécurisé Stripe\n\nCliquez ci-dessous pour en profiter 👇",
+                    footer: "Offre valable jusqu'au 31/01"
+                }
+            },
+            announcement: {
+                name: "📢 Annonce Importante",
+                icon: "📢",
+                config: {
+                    color: "#3b82f6",
+                    title: "📢 Nouvelle Mise à Jour",
+                    description: "Nous avons ajouté de nouvelles fonctionnalités !\n\n🆕 **Nouveautés:**\n• Système de tickets amélioré\n• Nouveaux rôles communautaires\n• Giveaways automatiques\n\nMerci pour votre soutien ! 💜",
+                    footer: "Équipe Shellia"
+                }
+            },
+            giveaway: {
+                name: "🎁 Giveaway",
+                icon: "🎁",
+                config: {
+                    color: "#8b5cf6",
+                    title: "🎁 Giveaway Spécial !",
+                    description: "**À gagner:** Plan Pro 3 mois !\n\n👥 **Gagnants:** 2\n⏰ **Fin:** Dans 48h\n🎲 **Tirage:** Aléatoire\n\nBonne chance à tous ! 🍀",
+                    footer: "Réagissez 🎉 pour participer"
+                }
+            },
+            rules: {
+                name: "📜 Règlement",
+                icon: "📜",
+                config: {
+                    color: "#ef4444",
+                    title: "📜 Règlement du Serveur",
+                    description: "**Merci de respecter ces règles:**\n\n1️⃣ Soyez respectueux\n2️⃣ Pas de spam\n3️⃣ Pas de contenu NSFW\n4️⃣ Utilisez les bons channels\n5️⃣ Pas de pub sans autorisation\n\nLe non-respect peut entraîner un ban.",
+                    footer: "Dernière mise à jour: 01/2024"
+                }
+            },
+            shop: {
+                name: "🛍️ Boutique",
+                icon: "🛍️",
+                config: {
+                    color: "#10b981",
+                    title: "🛍️ Notre Boutique",
+                    description: "**Découvrez nos offres premium:**\n\n⭐ **Pro** - €9.99/mois\n💎 **Ultra** - €19.99/mois\n👑 **Founder** - €99 lifetime\n\nPaiement sécurisé via Stripe 🔒",
+                    footer: "30 jours garantie satisfait/remboursé"
+                }
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadChannels();
+            loadTemplates();
+            loadEmbeds();
+            loadAnalytics();
+            setupPreviewListeners();
+            updatePreview();
+        });
+
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tab + '-tab').classList.add('active');
+        }
+
+        // Preview System
+        function setupPreviewListeners() {
+            const inputs = ['embed-color', 'embed-author', 'embed-title', 'embed-description', 
+                          'embed-footer', 'embed-image', 'embed-thumbnail'];
+            inputs.forEach(id => {
+                document.getElementById(id)?.addEventListener('input', updatePreview);
+            });
+            
+            document.getElementById('embed-color').addEventListener('input', (e) => {
+                document.getElementById('color-value').textContent = e.target.value;
+            });
+        }
+
+        function updatePreview() {
+            const color = document.getElementById('embed-color').value;
+            document.getElementById('discord-embed-preview').style.borderLeftColor = color;
+            
+            document.getElementById('preview-author').textContent = document.getElementById('embed-author').value;
+            document.getElementById('preview-title').textContent = document.getElementById('embed-title').value;
+            
+            // Parse markdown in description
+            let description = document.getElementById('embed-description').value;
+            description = description.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            description = description.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            description = description.replace(/`(.*?)`/g, '<code style="background: rgba(0,0,0,0.2); padding: 2px 4px; border-radius: 3px;">$1</code>');
+            description = description.replace(/\n/g, '<br>');
+            document.getElementById('preview-description').innerHTML = description;
+            
+            document.getElementById('preview-footer').textContent = document.getElementById('embed-footer').value;
+            
+            // Image
+            const imageUrl = document.getElementById('embed-image').value;
+            const imageEl = document.getElementById('preview-image');
+            if (imageUrl) {
+                imageEl.src = imageUrl;
+                imageEl.style.display = 'block';
+            } else {
+                imageEl.style.display = 'none';
+            }
+            
+            // Thumbnail
+            const thumbUrl = document.getElementById('embed-thumbnail').value;
+            const thumbEl = document.getElementById('preview-thumbnail');
+            if (thumbUrl) {
+                thumbEl.src = thumbUrl;
+                thumbEl.style.display = 'block';
+            } else {
+                thumbEl.style.display = 'none';
+            }
+            
+            // Timestamp
+            const timestamp = document.getElementById('embed-timestamp').value;
+            const timestampEl = document.getElementById('preview-timestamp');
+            if (timestamp === 'current') {
+                timestampEl.textContent = new Date().toLocaleString('fr-FR');
+            } else {
+                timestampEl.textContent = '';
+            }
+            
+            updateFieldsPreview();
+            updateButtonsPreview();
+        }
+
+        // Fields
+        function addField() {
+            const fieldId = fields.length;
+            fields.push({ name: '', value: '', inline: true });
+            
+            const container = document.getElementById('fields-container');
+            const fieldDiv = document.createElement('div');
+            fieldDiv.className = 'field-builder';
+            fieldDiv.id = `field-${fieldId}`;
+            fieldDiv.innerHTML = `
+                <div class="field-header">
+                    <strong>Field #${fieldId + 1}</strong>
+                    <button class="btn-icon delete" onclick="removeField(${fieldId})">🗑️</button>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" class="form-control" oninput="updateField(${fieldId}, 'name', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Valeur</label>
+                        <input type="text" class="form-control" oninput="updateField(${fieldId}, 'value', this.value)">
+                    </div>
+                </div>
+                <label class="checkbox-wrapper" style="margin-top: 10px;">
+                    <input type="checkbox" checked onchange="updateField(${fieldId}, 'inline', this.checked)">
+                    <span>Inline (côte à côte)</span>
+                </label>
+            `;
+            container.appendChild(fieldDiv);
+            updatePreview();
+        }
+
+        function updateField(id, key, value) {
+            if (fields[id]) {
+                fields[id][key] = value;
+                updateFieldsPreview();
+            }
+        }
+
+        function removeField(id) {
+            fields.splice(id, 1);
+            document.getElementById(`field-${id}`)?.remove();
+            updateFieldsPreview();
+        }
+
+        function updateFieldsPreview() {
+            const container = document.getElementById('preview-fields');
+            container.innerHTML = fields.map(f => `
+                <div class="discord-embed-field" style="grid-column: ${f.inline ? 'span 1' : '1 / -1'};">
+                    <div class="discord-embed-field-name">${f.name}</div>
+                    <div class="discord-embed-field-value">${f.value}</div>
+                </div>
+            `).join('');
+        }
+
+        // Buttons
+        function addButton() {
+            const btnId = buttons.length;
+            buttons.push({ label: 'Bouton', emoji: '', style: 'primary', action: 'link', url: '' });
+            
+            const container = document.getElementById('buttons-container');
+            const btnDiv = document.createElement('div');
+            btnDiv.className = 'button-row';
+            btnDiv.id = `button-${btnId}`;
+            btnDiv.innerHTML = `
+                <input type="text" class="form-control" placeholder="Label" style="flex: 1;" 
+                       oninput="updateButton(${btnId}, 'label', this.value)">
+                <input type="text" class="form-control" placeholder="Emoji" style="width: 60px;" 
+                       oninput="updateButton(${btnId}, 'emoji', this.value)">
+                <select class="form-control" style="width: 120px;" onchange="updateButton(${btnId}, 'style', this.value)">
+                    <option value="primary">Primary</option>
+                    <option value="secondary">Secondary</option>
+                    <option value="success">Success</option>
+                    <option value="danger">Danger</option>
+                    <option value="premium">Premium</option>
+                </select>
+                <select class="form-control" style="width: 150px;" onchange="updateButton(${btnId}, 'action', this.value)">
+                    <option value="link">Lien</option>
+                    <option value="payment">Paiement</option>
+                    <option value="ticket">Ticket</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <button class="btn-icon delete" onclick="removeButton(${btnId})">🗑️</button>
+            `;
+            container.appendChild(btnDiv);
+            updatePreview();
+        }
+
+        function updateButton(id, key, value) {
+            if (buttons[id]) {
+                buttons[id][key] = value;
+                updateButtonsPreview();
+            }
+        }
+
+        function removeButton(id) {
+            buttons.splice(id, 1);
+            document.getElementById(`button-${id}`)?.remove();
+            updateButtonsPreview();
+        }
+
+        function updateButtonsPreview() {
+            const container = document.getElementById('preview-buttons');
+            container.innerHTML = buttons.map(b => `
+                <button class="discord-btn ${b.style}">
+                    ${b.emoji ? `<span>${b.emoji}</span>` : ''}
+                    <span>${b.label || 'Bouton'}</span>
+                </button>
+            `).join('');
+        }
+
+        // Templates
+        function loadTemplates() {
+            const grid = document.getElementById('templates-grid');
+            grid.innerHTML = Object.entries(templates).map(([key, t]) => `
+                <div class="template-card" onclick="applyTemplate('${key}')">
+                    <div class="template-icon">${t.icon}</div>
+                    <div class="template-name">${t.name}</div>
+                </div>
+            `).join('');
+        }
+
+        function applyTemplate(key) {
+            const template = templates[key];
+            if (!template) return;
+            
+            document.getElementById('embed-color').value = template.config.color;
+            document.getElementById('embed-title').value = template.config.title;
+            document.getElementById('embed-description').value = template.config.description;
+            document.getElementById('embed-footer').value = template.config.footer;
+            
+            // Add default button based on template
+            buttons = [];
+            document.getElementById('buttons-container').innerHTML = '';
+            
+            if (key === 'promo' || key === 'shop') {
+                addButton();
+                updateButton(0, 'label', 'Acheter maintenant');
+                updateButton(0, 'emoji', '💳');
+                updateButton(0, 'style', 'premium');
+                updateButton(0, 'action', 'payment');
+            } else if (key === 'giveaway') {
+                addButton();
+                updateButton(0, 'label', 'Participer');
+                updateButton(0, 'emoji', '🎉');
+                updateButton(0, 'style', 'success');
+            }
+            
+            updatePreview();
+            showToast('Template appliqué !', 'success');
+        }
+
+        // Channels
+        async function loadChannels() {
+            channels = [
+                { id: '123', name: '🎫│support', type: 'text' },
+                { id: '456', name: '🛍️│boutique', type: 'text' },
+                { id: '789', name: '🎁│giveaways', type: 'text' },
+                { id: '101', name: '💬│général', type: 'text' },
+                { id: '202', name: '📢│annonces', type: 'text' },
+                { id: '303', name: '👋│bienvenue', type: 'text' }
+            ];
+            
+            const select = document.getElementById('embed-channel');
+            select.innerHTML = '<option value="">Sélectionner un channel...</option>' +
+                channels.map(c => `<option value="${c.id}">#${c.name}</option>`).join('');
+        }
+
+        // Actions
+        function sendEmbed() {
+            const channelId = document.getElementById('embed-channel').value;
+            if (!channelId) {
+                showToast('Veuillez sélectionner un channel', 'error');
+                return;
+            }
+            
+            // Collect data
+            const embedData = {
+                name: document.getElementById('embed-name').value,
+                channel_id: channelId,
+                color: document.getElementById('embed-color').value,
+                author: document.getElementById('embed-author').value,
+                author_icon: document.getElementById('embed-author-icon').value,
+                title: document.getElementById('embed-title').value,
+                url: document.getElementById('embed-url').value,
+                description: document.getElementById('embed-description').value,
+                image: document.getElementById('embed-image').value,
+                thumbnail: document.getElementById('embed-thumbnail').value,
+                footer: document.getElementById('embed-footer').value,
+                footer_icon: document.getElementById('embed-footer-icon').value,
+                timestamp: document.getElementById('embed-timestamp').value,
+                fields: fields,
+                buttons: buttons,
+                payment: {
+                    enabled: document.getElementById('payment-enabled').checked,
+                    product_id: document.getElementById('stripe-product').value,
+                    display_price: document.getElementById('display-price').value
+                }
+            };
+            
+            console.log('Sending embed:', embedData);
+            showToast('✅ Embed envoyé sur Discord !', 'success');
+        }
+
+        function saveDraft() {
+            showToast('💾 Brouillon sauvegardé', 'success');
+        }
+
+        function scheduleEmbed() {
+            showToast('⏰ Fonction de programmation à venir', 'success');
+        }
+
+        function resetForm() {
+            if (confirm('Réinitialiser le formulaire ?')) {
+                document.querySelectorAll('.form-control').forEach(i => i.value = '');
+                fields = [];
+                buttons = [];
+                document.getElementById('fields-container').innerHTML = '';
+                document.getElementById('buttons-container').innerHTML = '';
+                updatePreview();
+            }
+        }
+
+        // Embeds List
+        function loadEmbeds() {
+            embeds = [
+                { id: 1, name: 'Promo Janvier', channel: 'boutique', views: 234, clicks: 45 },
+                { id: 2, name: 'Welcome Message', channel: 'bienvenue', views: 567, clicks: 0 },
+                { id: 3, name: 'Giveaway 100 membres', channel: 'giveaways', views: 890, clicks: 234 }
+            ];
+            
+            renderEmbedsList();
+        }
+
+        function renderEmbedsList() {
+            const container = document.getElementById('embeds-list');
+            container.innerHTML = embeds.map(e => `
+                <div class="embed-card">
+                    <div class="embed-card-header">
+                        <div class="embed-info">
+                            <h3>${e.name}</h3>
+                            <div class="embed-meta">Channel: #${e.channel}</div>
+                        </div>
+                    </div>
+                    <div class="embed-preview-mini">
+                        <div style="color: #72767d; font-size: 0.75rem;">Embed Preview...</div>
+                    </div>
+                    <div class="embed-actions">
+                        <button class="btn-secondary btn-small" onclick="editEmbed(${e.id})">✏️ Modifier</button>
+                        <button class="btn-secondary btn-small" onclick="duplicateEmbed(${e.id})">📋 Dupliquer</button>
+                        <button class="btn-icon delete" onclick="deleteEmbed(${e.id})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function editEmbed(id) {
+            showToast(`✏️ Modification de l'embed ${id}`, 'success');
+        }
+
+        function duplicateEmbed(id) {
+            showToast(`📋 Embed ${id} dupliqué`, 'success');
+        }
+
+        function deleteEmbed(id) {
+            if (confirm('Supprimer cet embed ?')) {
+                embeds = embeds.filter(e => e.id !== id);
+                renderEmbedsList();
+                showToast('🗑️ Embed supprimé', 'success');
+            }
+        }
+
+        // Analytics
+        function loadAnalytics() {
+            document.getElementById('stat-total-embeds').textContent = '12';
+            document.getElementById('stat-total-views').textContent = '3.4K';
+            document.getElementById('stat-total-clicks').textContent = '567';
+            document.getElementById('stat-conversion').textContent = '16.7%';
+            document.getElementById('stat-revenue').textContent = '€2,340';
+            document.getElementById('stat-active-embeds').textContent = '8';
+        }
+
+        // Utilities
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function logout() {
+            localStorage.removeItem('admin_session');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
